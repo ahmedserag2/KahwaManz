@@ -15,9 +15,9 @@ abstract class Table
   // $fields->dict. used as placeholder
   abstract function by_id($id);
   // abstract function by_data($fields);
-  // abstract function insert($fields);
-  // abstract function update($fields);
-  // abstract function delete($fields);
+  abstract function insert($fields);
+  abstract function update($fields , $id);
+  abstract function delete($id);
   // select not needed? by_id constructs
 }
 
@@ -50,6 +50,22 @@ class Drink extends Table
       array_push($this->condiments, $cond);
     }
   }
+
+  function insert($feilds){
+
+    return true;
+  }
+
+  function update($fields , $id)
+  {
+
+  }
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
    //test function
   function display(){
     echo "$this->id <br> $this->name <br> ";
@@ -80,6 +96,19 @@ class Condiment extends Table
     $this->price = $row['price'];
     $this->type = $row['type'];
   }
+  function insert($fields){
+    return true;
+  }
+
+  function update($fields , $id){
+
+  }
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
 
   function display(){
     echo "<br> $this->id <br> $this->name <br> $this->price <br> $this->type <br>";
@@ -90,6 +119,10 @@ class Condiment extends Table
 class Beans extends Table
 {
   private $id, $name, $price;
+
+  //please dont changephp doesnt allow constants oop :(
+  private $columns = "name,price";
+  private $table_name = "beans";
   function __construct(){
     parent::__construct();
   }
@@ -104,14 +137,47 @@ class Beans extends Table
     $this->name = $row['name'];
     $this->price = $row['price'];
   }
+  function insert($fields){
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+
+  }
+
+  function update($fields, $id)
+  {
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update 
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
   //test function
   function display(){
     echo "<br> $this->id <br> $this->name <br> $this->price <br>";
   }
 }
 
-$drink = new Drink();
-$drink->by_id(1);
-$drink->display();
 
 ?>
