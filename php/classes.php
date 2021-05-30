@@ -24,7 +24,8 @@ abstract class Table
 class Drink extends Table
 {
   private $id, $name, $condiments, $beans;
-
+  private $table_name = "drink"; 
+  private $columns = "name,condiments_ID,beans_ID,grind,price";
   function __construct(){
     parent::__construct();
   }
@@ -51,14 +52,34 @@ class Drink extends Table
     }
   }
 
-  function insert($feilds){
-
-    return true;
+  function insert($fields){
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    echo $sql;
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
   }
 
   function update($fields , $id)
   {
-
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update 
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
   }
   function delete($id)
   {
