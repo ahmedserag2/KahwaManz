@@ -101,7 +101,8 @@ class Drink extends Table
 class Condiment extends Table
 {
   private $id, $name, $price, $type;
-
+  private $columns = "name,price,type";
+  private $table_name = "condiment";
   function __construct(){
     parent::__construct();
   }
@@ -118,11 +119,33 @@ class Condiment extends Table
     $this->type = $row['type'];
   }
   function insert($fields){
-    return true;
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+
   }
 
-  function update($fields , $id){
-
+  function update($fields, $id)
+  {
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update 
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
   }
   function delete($id)
   {

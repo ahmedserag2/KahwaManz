@@ -3,7 +3,7 @@
 include_once "classes.php";
 
 //reading drink with id 1 from db
-if(1)
+if(0)
 {   
     //read drink by id
     $drink = new Drink();
@@ -37,6 +37,35 @@ if(1)
     
 }
 
+
+//condiment testing
+if(1)
+{
+    $condiment = new Condiment();
+    //insert
+    if(0)
+    {
+        $res = $condiment->insert(array("condname",40,'sauce'));
+        if($res){echo "inserted succefly";}
+        else{echo "failed inserting";}
+    }
+    //update
+    if(0)
+    {
+        $res = $condiment->update(array("testupdatecond",40,'sauce'),2);
+        if($res){echo "updated succefully";}
+        else{echo "failed updating";}
+    }
+
+    //delete
+    if(0)
+    {
+        $res = $condiment->delete(2);
+        if($res){echo "deleted succefully";}
+        else{echo "failed deleting";}
+    }
+    
+}
 
 
 //beans testing cases
