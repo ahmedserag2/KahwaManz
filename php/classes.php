@@ -1,6 +1,6 @@
 <?php
 
-abstract class Table
+abstract class Database
 {
   // Variable
   protected $conn;
@@ -38,7 +38,7 @@ abstract class Table
   // function select_where($table_name,$where);
 }
 
-class Drink extends Table
+class Drink extends Database
 {
   private $id, $name, $condiments_ID, $beans;
   protected $table_name = "drink";
@@ -136,7 +136,7 @@ class Drink extends Table
 
 }
 
-class Condiment extends Table
+class Condiment extends Database
 {
   private $id, $name, $price, $type;
   protected $columns = "name,price,type";
@@ -211,7 +211,7 @@ class Condiment extends Table
 
 }
 
-class Beans extends Table
+class Beans extends Database
 {
   private $id, $name, $price;
 
