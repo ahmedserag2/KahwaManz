@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2021 at 11:50 AM
+-- Generation Time: May 30, 2021 at 10:57 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -21,18 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `coffeeshop`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `beans`
---
-
-CREATE TABLE `beans` (
-  `ID` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` double(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,9 +44,6 @@ CREATE TABLE `condiment` (
 CREATE TABLE `drink` (
   `ID` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `condiments_ID` text NOT NULL,
-  `beans_ID` int(11) NOT NULL,
-  `grind` enum('coarse','medium-coarse','medium','fine','extra fine') NOT NULL,
   `price` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -72,6 +57,7 @@ CREATE TABLE `orders` (
   `ID` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `items` text DEFAULT NULL,
+  `quantity` text NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -87,19 +73,12 @@ CREATE TABLE `user` (
   `email` varchar(254) NOT NULL,
   `password` varchar(255) NOT NULL,
   `mobile` varchar(11) NOT NULL,
-  `address` text NOT NULL,
   `type` enum('admin','employee','customer','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `beans`
---
-ALTER TABLE `beans`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `condiment`
@@ -111,8 +90,7 @@ ALTER TABLE `condiment`
 -- Indexes for table `drink`
 --
 ALTER TABLE `drink`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `beans` (`beans_ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `orders`
@@ -130,12 +108,6 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `beans`
---
-ALTER TABLE `beans`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `condiment`
@@ -164,12 +136,6 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `drink`
---
-ALTER TABLE `drink`
-  ADD CONSTRAINT `drink_ibfk_1` FOREIGN KEY (`beans_ID`) REFERENCES `beans` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`
