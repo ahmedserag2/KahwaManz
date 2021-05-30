@@ -61,12 +61,6 @@ class Drink extends Table
       $this->beans = $beans_temp;
     }
   }
-  function fill($id, $name, $condiments_ID, $beans){
-    $this->id = $id;
-    $this->name = $name;
-    $this->condiments_ID = $condiments_ID;
-    $this->beans = $beans;
-  }
   function __destruct() {
     parent::__destruct();
   }
