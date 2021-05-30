@@ -4,6 +4,7 @@ abstract class Table
 {
   // Variable
   protected $conn;
+  protected $table_name, $columns;
   // Functions
   function __construct() {
     $this->conn = new mysqli("localhost", "root", "", "coffeeshop");
@@ -14,20 +15,57 @@ abstract class Table
   // Abstract Functions
   // $fields->dict. used as placeholder
   abstract function by_id($id);
-  // abstract function by_data($fields);
+  abstract function by_data($fields);
   abstract function insert($fields);
-  abstract function update($fields , $id);
+  abstract function update($fields , $id); // id not needed? id in instance
   abstract function delete($id);
-  // select not needed? by_id constructs
+  function select_all(){
+    $sql = "SELECT * FROM $this->table_name";
+    $result = mysqli_query($this->conn,$sql);
+    $select_array = [];
+    while ($row = mysqli_fetch_array($result)) {
+      $fields = [];
+      foreach ($row as $key => $value) {
+        $fields[$key] = $value;
+      }
+      $class = get_class($this);
+      $temp_class = new $class($fields);
+      array_push($select_array,$temp_class);
+    }
+    return $select_array;
+  }
+  // $where = "WHERE x = y"
+  // function select_where($table_name,$where);
 }
 
 class Drink extends Table
 {
-  private $id, $name, $condiments, $beans;
-  private $table_name = "drink"; 
-  private $columns = "name,condiments_ID,beans_ID,grind,price";
-  function __construct(){
+  private $id, $name, $condiments_ID, $beans;
+  protected $table_name = "drink";
+  protected $columns = "name,condiments_ID,beans_ID,grind,price";
+  function __construct($fields){
     parent::__construct();
+    if($fields){
+      $this->id = $fields['ID'];
+      $this->name = $fields['name'];
+      $this->condiments_ID = [];
+      // Split IDs and aggregate condiments
+      $cond_str = explode(",",$fields['condiments_ID']);
+      foreach ($cond_str as $value) {
+        $cond = new Condiment(0);
+        $cond->by_id(intval($value));
+        array_push($this->condiments_ID, $cond);
+      }
+      $beans_temp = new Beans(0);
+      $beans_temp->by_id($fields['beans_ID']);
+      $this->beans = $beans_temp;
+    }
+  }
+  function fill($id, $name, $condiments_ID, $beans){
+    $this->id = $id;
+    $this->name = $name;
+    $this->condiments_ID = $condiments_ID;
+    $this->beans = $beans;
   }
   function __destruct() {
     parent::__destruct();
@@ -39,25 +77,31 @@ class Drink extends Table
 
     $this->id = $row['ID'];
     $this->name = $row['name'];
-    $beans_temp = new Beans();
-    $beans_temp->by_id($row['ID']);
+    $beans_temp = new Beans(0);
+    $beans_temp->by_id($row['beans_ID']);
     $this->beans = $beans_temp;
-    $this->condiments = [];
+    $this->condiments_ID = [];
     // Split IDs and aggregate condiments
     $cond_str = explode(",",$row['condiments_ID']);
     foreach ($cond_str as $value) {
-      $cond = new Condiment();
+      $cond = new Condiment(0);
       $cond->by_id(intval($value));
-      array_push($this->condiments, $cond);
+      array_push($this->condiments_ID, $cond);
     }
+  }
+
+  function by_data($fields){
+    $this->name = $fields['name'];
+    $this->condiments_ID = $fields['condiments_ID'];
+    $this->beans = $fields['beans'];
+    $this->id = $this->insert();
   }
 
   function insert($fields){
     $values = implode("','",array_values($fields));
     $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
-    echo $sql;
     $result = mysqli_query($this->conn,$sql);
-    return $result;
+    return mysqli_insert_id($this->conn);
   }
 
   function update($fields , $id)
@@ -76,7 +120,7 @@ class Drink extends Table
         $updatedElements .= " , ";
       }
     }
-    //check the id to update 
+    //check the id to update
     $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     return $result;
@@ -91,7 +135,7 @@ class Drink extends Table
   function display(){
     echo "$this->id <br> $this->name <br> ";
     $this->beans->display();
-    foreach ($this->condiments as $value) {
+    foreach ($this->condiments_ID as $value) {
       $value->display();
     }
   }
@@ -101,10 +145,16 @@ class Drink extends Table
 class Condiment extends Table
 {
   private $id, $name, $price, $type;
-  private $columns = "name,price,type";
-  private $table_name = "condiment";
-  function __construct(){
+  protected $columns = "name,price,type";
+  protected $table_name = "condiment";
+  function __construct($fields){
     parent::__construct();
+    if ($fields) {
+      $this->id = $fields['ID'];
+      $this->name = $fields['name'];
+      $this->price = $fields['price'];
+      $this->type = $fields['type'];
+    }
   }
   function __destruct() {
     parent::__destruct();
@@ -118,12 +168,19 @@ class Condiment extends Table
     $this->price = $row['price'];
     $this->type = $row['type'];
   }
+
+  function by_data($fields){
+    $this->name = $fields['name'];
+    $this->price = $fields['price'];
+    $this->type = $fields['type'];
+    $this->id = $this->insert();
+  }
+
   function insert($fields){
     $values = implode("','",array_values($fields));
     $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
     $result = mysqli_query($this->conn,$sql);
-    return $result;
-
+    return mysqli_insert_id($this->conn);
   }
 
   function update($fields, $id)
@@ -142,7 +199,7 @@ class Condiment extends Table
         $updatedElements .= " , ";
       }
     }
-    //check the id to update 
+    //check the id to update
     $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     return $result;
@@ -165,10 +222,15 @@ class Beans extends Table
   private $id, $name, $price;
 
   //please dont changephp doesnt allow constants oop :(
-  private $columns = "name,price";
-  private $table_name = "beans";
-  function __construct(){
+  protected $columns = "name,price";
+  protected $table_name = "beans";
+  function __construct($fields){
     parent::__construct();
+    if ($fields) {
+      $this->id = $fields['ID'];
+      $this->name = $fields['name'];
+      $this->price = $fields['price'];
+    }
   }
   function __destruct() {
     parent::__destruct();
@@ -181,11 +243,16 @@ class Beans extends Table
     $this->name = $row['name'];
     $this->price = $row['price'];
   }
+  function by_data($fields){
+    $this->name = $fields['name'];
+    $this->price = $fields['price'];
+    $this->id = $this->insert();
+  }
   function insert($fields){
     $values = implode("','",array_values($fields));
     $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
     $result = mysqli_query($this->conn,$sql);
-    return $result;
+    return mysqli_insert_id($this->conn);
 
   }
 
@@ -205,7 +272,7 @@ class Beans extends Table
         $updatedElements .= " , ";
       }
     }
-    //check the id to update 
+    //check the id to update
     $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     return $result;
@@ -223,5 +290,22 @@ class Beans extends Table
   }
 }
 
-
+// echo "<br>test drink <br> ";
+// $class = new Drink(0);
+// $class = $class->select_all();
+// foreach ($class as $value) {
+//   $value->display();
+// }
+// echo "<br> test beans <br>";
+// $class = new Beans(0);
+// $class = $class->select_all();
+// foreach ($class as $value) {
+//   $value->display();
+// }
+// echo "<br> test condiments <br>";
+// $class = new Condiment(0);
+// $class = $class->select_all();
+// foreach ($class as $value) {
+//   $value->display();
+// }
 ?>
