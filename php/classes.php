@@ -34,6 +34,25 @@ abstract class Database
     }
     return $select_array;
   }
+
+
+  function select_pagiated($pageNo , $itemsNo){
+    $limit = $itemsNo;
+    $offset = $pageNo * $itemsNo;
+    $sql = "SELECT * FROM $this->table_name LIMIT $limit OFFSET $offset";
+    $result = mysqli_query($this->conn,$sql);
+    $select_array = [];
+    while ($row = mysqli_fetch_array($result)) {
+      $fields = [];
+      foreach ($row as $key => $value) {
+        $fields[$key] = $value;
+      }
+      $class = get_class($this);
+      $temp_class = new $class($fields);
+      array_push($select_array,$temp_class);
+    }
+    return $select_array;
+  }
   // $where = "WHERE x = y"
   // function select_where($table_name,$where);
 }

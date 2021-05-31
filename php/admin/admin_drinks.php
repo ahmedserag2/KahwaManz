@@ -3,10 +3,7 @@
     <?php include_once "./includes/admin_header.php";?>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
     <div class= "body">
 
         <?php include_once "./includes/admin_sidebar.php";?>
@@ -39,7 +36,15 @@
                 <tbody>
                     <?php 
                         $class = new Drink(0);
-                        $class = $class->select_all();
+                        
+                        $noOfItems = count($class->select_all());
+                        $itemsPerPage = 10;
+                        $currentPage = 0;
+                        if(isset($_GET['p']))
+                            $currentPage = $_GET['p'];
+                        $noOfPages = ceil($noOfItems / $itemsPerPage);
+                        //assuming wer at page 0 and want to read 4 items
+                        $class = $class->select_pagiated($currentPage, $itemsPerPage);
                         foreach ($class as $value) {
                             //var_dump($value);
                            $value->display_table_row();
@@ -50,9 +55,40 @@
                 </tbody>
                 </table>
             </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                <?php if($currentPage > 0){ ?>
+                    <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage-1) ?>" aria-label="Previous"> 
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span> <?php }?>
+                </a>
+                </li>
+                <?php for($i = 0; $i < $noOfPages; $i++){
+                    $pNum = $i + 1;
+                    echo "<li class='page-item'><a class='page-link' href='admin_drinks.php?p={$i}'>{$pNum}</a></li>";
+
+
+                }?>
+                
+                <?php if($currentPage < $noOfPages -1){ ?>
+                <li class="page-item">
+                <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage+1) ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <?php } ?>
+                </li>
+            </ul>
+        </nav>
+
         </section>
 
+    
     </div>
+
+    
 
 
 </body>

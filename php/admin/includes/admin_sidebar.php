@@ -25,7 +25,7 @@
 						<span>Drinks</span>
 					</a>
 				</li>
-        <li>
+        		<li>
 					<a href="#">
 						<i class="fa fa-users" aria-hidden="true"></i>
 						<span>Users</span>
