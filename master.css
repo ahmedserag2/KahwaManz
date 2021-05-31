@@ -44,7 +44,7 @@ body, html {
   position: absolute;
   width: 100%;
   top: 24%;
-  height: 100%;
+  height: 78%;
   background-color: #E5E5E5;
   border-radius: 100px;
 }
@@ -81,8 +81,39 @@ p{
   font-size: 30px;
   margin: 39px;
   letter-spacing: 5px;
-  padding: 30px;
+  padding: 20px;
 }
+
 .menu-bg img{
   padding: 55px;
+}
+
+#radio{
+  width: 50px;
+  height: 50px;
+  margin-left:58px;
+  filter: grayscale(1);
+}
+
+#label{
+  margin-left:18px;
+  font-size: 45px;
+}
+
+.btn{
+  font-size: 40px;
+  background-color: white;
+  cursor: pointer;
+  margin-left:58px;
+  border: 1px solid grey;
+  border-radius: 30px;
+}
+
+#quantity{
+  font-weight: bold;
+  width: 40px;
+  border: none;
+  font-size: 40px;
+  margin-left: 41px;
+  background-color: #E5E5E5;
 }
