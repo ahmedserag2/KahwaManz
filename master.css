@@ -18,7 +18,7 @@ body, html {
 .container{
   width: 100%;
 }
-.container img{
+.bg img{
   width: 100%;
 }
 input{
@@ -56,4 +56,16 @@ input{
 .photo img{
   border: none;
   border-radius: 50px;
+}
+
+h1{
+  font-family: "Roboto";
+  font-size: 90px;
+  margin-left: 60px;
+  margin-top: 0;
+  font-weight: bolder;
+}
+
+.menu-bg img{
+  padding: 55px;
 }
