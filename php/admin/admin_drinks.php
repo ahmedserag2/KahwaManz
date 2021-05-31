@@ -80,9 +80,9 @@
 
                    <div class = "form-group row">
 
-                        <label for = "name"  class = "col-sm-3">Drink's Name</label>
+                        <label for = "nameAdd"  class = "col-sm-3">Drink's Name</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "name" id = "name" required>
+                            <input type = "text" name = "nameAdd" id = "nameAdd" required>
                         </div>
                    </div>
 
@@ -90,14 +90,14 @@
 
                         <label for = "price"  class = "col-sm-3">Price</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "price" id = "price" required>
+                            <input type = "text" name = "priceAdd" id = "priceAdd" required>
                         </div>
                    </div>
 
                    <p><b>Description</b></p>
                     <div class="form-group">
                     <div class="col-sm-12">
-                        <textarea id="editor1" name="description" rows="10" cols="50" required></textarea>
+                        <textarea id="editor1" name="descriptionAdd" rows="10" cols="50" required></textarea>
                     </div>
                     
                     </div>
@@ -116,4 +116,26 @@
         </div>
 
     </div>
-        <!-- modal ended -->
+<!-- modal ended -->
+
+
+<?php 
+
+//submiting values from modal into db 
+    //thats if wer adding a new drink to db 
+    
+    if(isset($_GET['nameAdd']))
+    {
+        
+        $name = $_GET['nameAdd'];
+        $price = $_GET['priceAdd'];
+        $description = $_GET['descriptionAdd'];
+
+        $drink = new Drink(null);
+        $drink->insert(array($name,$price,$description));
+
+        echo '<script>window.location.replace("admin_drinks.php");</script>';
+    }
+
+
+?>

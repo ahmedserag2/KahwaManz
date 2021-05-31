@@ -42,7 +42,8 @@ class Drink extends Database
 {
   private $id, $name, $condiments_ID, $beans,$price,$desc;
   protected $table_name = "drink";
-  protected $columns = "name,price,desc";
+  //changed desc to description to match column name in db
+  protected $columns = "name,price,description";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -96,8 +97,10 @@ class Drink extends Database
   }
 
   function insert($fields){
+    
     $values = implode("','",array_values($fields));
     $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    echo $sql;
     $result = mysqli_query($this->conn,$sql);
     return mysqli_insert_id($this->conn);
   }
@@ -142,7 +145,7 @@ class Drink extends Database
     <td>{$this->price} EGP</td>
     <td>{$this->desc} </td>
     <td><button type='button' class='btn btn-warning'>Edit</button></td>
-    
+
     </tr> ";
   }
 
