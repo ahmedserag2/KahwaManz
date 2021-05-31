@@ -18,10 +18,13 @@ body, html {
 .container{
   width: 100%;
 }
+
+
 .bg img{
   width: 100%;
 }
-input{
+
+#search{
   font-family: "Roboto";
   padding-left: 95px;
   font-size: 50px;
@@ -66,6 +69,20 @@ h1{
   font-weight: bolder;
 }
 
+h2{
+  font-family: "Roboto";
+  font-size: 60px;
+  margin-left: 60px;
+  margin-top: 0;
+  padding-top: 20px;
+  font-weight: bolder;
+}
+p{
+  font-size: 30px;
+  margin: 39px;
+  letter-spacing: 5px;
+  padding: 30px;
+}
 .menu-bg img{
   padding: 55px;
 }
