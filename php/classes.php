@@ -49,6 +49,7 @@ class Drink extends Database
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
       $this->price = $fields['price'];
+      $this->desc = $fields['description'];
       /*$this->condiments_ID = [];
       // Split IDs and aggregate condiments
       $cond_str = explode(",",$fields['condiments_ID']);
@@ -139,8 +140,9 @@ class Drink extends Database
     <th scope='row'>{$this->id}</th>
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
+    <td>{$this->desc} </td>
     <td><button type='button' class='btn btn-warning'>Edit</button></td>
-
+    
     </tr> ";
   }
 

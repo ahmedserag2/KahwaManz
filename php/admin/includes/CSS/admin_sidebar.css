@@ -131,3 +131,19 @@
     background-color:#9e7540;
 
 }
+
+.modal-open .modal{
+	overflow:hidden;
+	
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: hidden !important
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
+
+   
