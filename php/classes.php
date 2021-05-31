@@ -167,7 +167,11 @@ class Drink extends Database
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
     <td>{$this->desc} </td>
-    <td><button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button></td>
+    <td>
+    <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
+    <a href='admin_drinks.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
+    </td>
+    
 
     </tr> ";
   }

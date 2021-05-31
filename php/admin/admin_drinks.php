@@ -55,7 +55,8 @@
                 </tbody>
                 </table>
             </div>
-
+        <div style="margin:10px;">
+        <h5>Pages</h5>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
@@ -82,7 +83,7 @@
                 </li>
             </ul>
         </nav>
-
+        </div>
         </section>
 
     
@@ -258,6 +259,15 @@
         $drink->update(array($name,$price,$description), $id);
         echo '<script>window.location.replace("admin_drinks.php");</script>';
 
+    }
+
+    //checking for delete request
+    if(isset($_GET['delete']))
+    {
+        $id = $_GET['delete'];
+        $drink = new Drink(null);
+        $drink->delete($id);
+        echo '<script>window.location.replace("admin_drinks.php");</script>';
     }
 
 
