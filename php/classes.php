@@ -144,6 +144,18 @@ class Drink extends Database
     </tr> ";
   }
 
+  function get_name(){
+    return $this->name;
+  }
+
+  function get_desc(){
+    return $this->desc;
+  }
+
+  function get_price(){
+    return $this->price;
+  }
+
 }
 
 class Condiment extends Database
