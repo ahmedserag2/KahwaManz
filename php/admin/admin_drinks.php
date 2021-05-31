@@ -10,27 +10,44 @@
     <div class= "body">
 
         <?php include_once "./includes/admin_sidebar.php";?>
+        
+        <?php include_once "../classes.php"; //access the drinks page?>
+
+        
 
         <section class="section-1">
-            <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Drink's Name</th>
-                    <th scope="col">Price</th>
+            <img src="../../images/cappucino.jpg" style="width:100%;height:30%" alt="Italian Trulli">
+            <div class = "row">
+                <div class = "col">
+                    <button type="button" class="btn btn-warning">Add</button>
+                </div>
+            </div>
+            <div class = "table-responsive">
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Drink's Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Action</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        $class = new Drink(0);
+                        $class = $class->select_all();
+                        foreach ($class as $value) {
+                            //var_dump($value);
+                           $value->display_table_row();
+                        }
+                    ?>
                     
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>50 EGP</td>
-                
-                </tr>
-                
-            </tbody>
-            </table>
+                    
+                </tbody>
+                </table>
+            </div>
         </section>
 
     </div>
