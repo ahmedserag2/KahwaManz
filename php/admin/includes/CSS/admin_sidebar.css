@@ -3,7 +3,11 @@
 	margin: 0;
 	box-sizing: border-box;
 	font-family: arial, sans-serif;
+        overflow-x: hidden
+
 }
+
+
 .header {
 	display: flex;
 	justify-content: space-between;
@@ -115,4 +119,15 @@
 }
 #checkbox:checked ~ .body .side-bar a span{
 	display: none;
+}
+
+
+.btn-warning{
+    background-color:#bd9354;
+    
+}
+
+.btn-warning:hover{
+    background-color:#9e7540;
+
 }

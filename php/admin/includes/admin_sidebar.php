@@ -21,7 +21,7 @@
 				</li>
 				<li>
 					<a href="admin_drinks.php">
-						<i class="fa fa-product" aria-hidden="true"></i>
+						<i class="fa fa-shopping-basket" aria-hidden="true"></i>
 						<span>Drinks</span>
 					</a>
 				</li>
