@@ -131,3 +131,91 @@ p{
   height: 130px;
   background-color: #964B00;
 }
+
+.menu-bg-c{
+  position: absolute;
+  width: 100%;
+  top: 24%;
+  min-height: 100%;
+  background-color: #E5E5E5;
+  border-radius: 100px;
+}
+
+.basket-c{
+  position:relative;
+  left: 0%;
+  color: white;
+  width: 95%;
+  letter-spacing: 2px;
+  padding-left: 56px;
+  border-radius: 35px;
+  text-align: left;
+  font-size: 60px;
+  height: 130px;
+  background-color: #964B00;
+}
+
+.customize-title{
+  position: relative;
+  text-align: center;
+  width: auto;
+  height: 76px;
+  margin-top: 200px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 90px;
+  line-height: 28px;
+  text-align: left;
+  color: #000000;
+}
+
+.step-title{
+  position: relative;
+  width: auto;
+
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 16px;
+  text-align: left;
+  color: #000000;
+  margin-bottom: 100px;
+}
+
+.step{
+  position: relative;
+  text-align: left;
+  font-style: normal;
+  margin-bottom: 100px;
+}
+
+.step-radio{
+  font-size: 50px;
+  width: 50px;
+  margin-right: 40px;
+  right: 20px;
+  position: relative;
+  left: 5%;
+}
+
+.step-price{
+  font-size: 50px;
+  width: 50px;
+  margin-right: 40px;
+  position: relative;
+  float: right;
+  right: 10%;
+}
+
+.step-option{
+  font-weight: 40px;
+}
+
+input[type="radio" i]{
+  font-size: 40px;
+  height: 40px;
+}
