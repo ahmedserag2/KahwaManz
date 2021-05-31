@@ -231,6 +231,22 @@ class Condiment extends Database
     echo "<br> $this->id <br> $this->name <br> $this->price <br> $this->type <br>";
   }
 
+  function get_id(){
+    return $this->id;
+  }
+
+  function get_name(){
+    return $this->name;
+  }
+
+  function get_desc(){
+    return $this->desc;
+  }
+
+  function get_price(){
+    return $this->price;
+  }
+
 }
 
 class Beverage extends Database
@@ -304,6 +320,22 @@ class Beverage extends Database
 
   function display(){
     echo "<br> $this->id <br> $this->name <br> $this->price <br> $this->type <br>";
+  }
+
+  function get_id(){
+    return $this->id;
+  }
+
+  function get_name(){
+    return $this->name;
+  }
+
+  function get_type(){
+    return $this->type;
+  }
+
+  function get_price(){
+    return $this->price;
   }
 
 }
