@@ -139,12 +139,16 @@ class Drink extends Database
 
   }
   function display_table_row(){
+
+    $values = array("ID"=>$this->id,"name"=>$this->name,"price"=>$this->price,"description"=>$this->desc);
+    $json_object = json_encode($values); 
+
     echo "<tr>
     <th scope='row'>{$this->id}</th>
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
     <td>{$this->desc} </td>
-    <td><button type='button' class='btn btn-warning'>Edit</button></td>
+    <td><button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button></td>
 
     </tr> ";
   }
