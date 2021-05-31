@@ -48,7 +48,8 @@ class Drink extends Database
     if($fields){
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
-      $this->condiments_ID = [];
+      $this->price = $fields['price'];
+      /*$this->condiments_ID = [];
       // Split IDs and aggregate condiments
       $cond_str = explode(",",$fields['condiments_ID']);
       foreach ($cond_str as $value) {
@@ -58,7 +59,7 @@ class Drink extends Database
       }
       $beans_temp = new Beans(0);
       $beans_temp->by_id($fields['beans_ID']);
-      $this->beans = $beans_temp;
+      $this->beans = $beans_temp;*/
     }
   }
   function __destruct() {
@@ -131,6 +132,15 @@ class Drink extends Database
     echo "$this->id <br> $this->name <br> $this->price";
     
     
+  }
+  function display_table_row(){
+    echo "<tr>
+    <th scope='row'>{$this->id}</th>
+    <td>{$this->name}</td>
+    <td>{$this->price} EGP</td>
+    <td><button type='button' class='btn btn-warning'>Edit</button></td>
+    
+    </tr> ";
   }
 
 }
