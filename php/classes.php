@@ -40,9 +40,9 @@ abstract class Database
 
 class Drink extends Database
 {
-  private $id, $name, $condiments_ID, $beans;
+  private $id, $name, $condiments_ID, $beans,$price;
   protected $table_name = "drink";
-  protected $columns = "name,condiments_ID,beans_ID,grind,price";
+  protected $columns = "name,price";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -71,17 +71,18 @@ class Drink extends Database
 
     $this->id = $row['ID'];
     $this->name = $row['name'];
-    $beans_temp = new Beans(0);
-    $beans_temp->by_id($row['beans_ID']);
-    $this->beans = $beans_temp;
-    $this->condiments_ID = [];
+    $this->price = $row['price'];
+    //$beans_temp = new Beans(0);
+    //$beans_temp->by_id($row['beans_ID']);
+    //$this->beans = $beans_temp;
+    //$this->condiments_ID = [];
     // Split IDs and aggregate condiments
-    $cond_str = explode(",",$row['condiments_ID']);
-    foreach ($cond_str as $value) {
+    //$cond_str = explode(",",$row['condiments_ID']);
+    /*foreach ($cond_str as $value) {
       $cond = new Condiment(0);
       $cond->by_id(intval($value));
       array_push($this->condiments_ID, $cond);
-    }
+    }*/
   }
 
   function by_data($fields){
@@ -127,11 +128,9 @@ class Drink extends Database
   }
    //test function
   function display(){
-    echo "$this->id <br> $this->name <br> ";
-    $this->beans->display();
-    foreach ($this->condiments_ID as $value) {
-      $value->display();
-    }
+    echo "$this->id <br> $this->name <br> $this->price";
+    
+    
   }
 
 }
