@@ -10,7 +10,8 @@
     <div class= "body">
 
         <?php include_once "./includes/admin_sidebar.php";?>
-
+        
+        <?php include_once "../classes.php"; //access the drinks page?>
 
         
 
@@ -34,13 +35,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>50 EGP</td>
-                    <td><button type="button" class="btn btn-warning">Edit</button></td>
+                    <?php 
+                        $class = new Drink(0);
+                        $class = $class->select_all();
+                        foreach ($class as $value) {
+                            //var_dump($value);
+                           $value->display_table_row();
+                        }
+                    ?>
                     
-                    </tr>
                     
                 </tbody>
                 </table>
