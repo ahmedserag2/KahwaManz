@@ -40,9 +40,9 @@ abstract class Database
 
 class Drink extends Database
 {
-  private $id, $name, $condiments_ID, $beans,$price;
+  private $id, $name, $condiments_ID, $beans,$price,$desc;
   protected $table_name = "drink";
-  protected $columns = "name,price";
+  protected $columns = "name,price,desc";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -72,6 +72,7 @@ class Drink extends Database
     $this->id = $row['ID'];
     $this->name = $row['name'];
     $this->price = $row['price'];
+    $this->desc = $row['description'];
     //$beans_temp = new Beans(0);
     //$beans_temp->by_id($row['beans_ID']);
     //$this->beans = $beans_temp;
@@ -129,8 +130,20 @@ class Drink extends Database
    //test function
   function display(){
     echo "$this->id <br> $this->name <br> $this->price";
-    
-    
+
+
+  }
+
+  function get_name(){
+    return $this->name;
+  }
+
+  function get_desc(){
+    return $this->desc;
+  }
+
+  function get_price(){
+    return $this->price;
   }
 
 }
