@@ -130,8 +130,8 @@ class Drink extends Database
    //test function
   function display(){
     echo "$this->id <br> $this->name <br> $this->price";
-    
-    
+
+
   }
   function display_table_row(){
     echo "<tr>
@@ -139,7 +139,7 @@ class Drink extends Database
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
     <td><button type='button' class='btn btn-warning'>Edit</button></td>
-    
+
     </tr> ";
   }
 
@@ -150,6 +150,81 @@ class Condiment extends Database
   private $id, $name, $price, $type;
   protected $columns = "name,price,type";
   protected $table_name = "condiment";
+  function __construct($fields){
+    parent::__construct();
+    if ($fields) {
+      $this->id = $fields['ID'];
+      $this->name = $fields['name'];
+      $this->price = $fields['price'];
+      $this->type = $fields['type'];
+    }
+  }
+  function __destruct() {
+    parent::__destruct();
+  }
+  function by_id($id){
+    $sql = "SELECT * FROM condiment WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    $row = mysqli_fetch_array($result);
+    $this->id = $row['ID'];
+    $this->name = $row['name'];
+    $this->price = $row['price'];
+    $this->type = $row['type'];
+  }
+
+  function by_data($fields){
+    $this->name = $fields['name'];
+    $this->price = $fields['price'];
+    $this->type = $fields['type'];
+    $this->id = $this->insert();
+  }
+
+  function insert($fields){
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    $result = mysqli_query($this->conn,$sql);
+    return mysqli_insert_id($this->conn);
+  }
+
+  function update($fields, $id)
+  {
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+
+  function display(){
+    echo "<br> $this->id <br> $this->name <br> $this->price <br> $this->type <br>";
+  }
+
+}
+
+class Beverage extends Database
+{
+  private $id, $name, $price, $type;
+  protected $columns = "name,price,type";
+  protected $table_name = "beverages";
   function __construct($fields){
     parent::__construct();
     if ($fields) {
