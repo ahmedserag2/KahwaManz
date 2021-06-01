@@ -387,4 +387,119 @@ class Beverage extends Database
 
 }
 
+class User extends Database
+{
+
+  private $id, $username,$email,$password,$mobile,$type ;
+  protected $table_name = "user";
+  //changed desc to description to match column name in db
+  protected $columns = "username,email,password,mobile,type";
+  function __construct($fields){
+    parent::__construct();
+    //pass fields null temporarly
+    if($fields){
+      
+      $this->id = $fields['ID'];
+      $this->username = $fields['username'];
+      $this->email = $fields['email'];
+      $this->password = $fields['password'];
+
+      $this->mobile = $fields['mobile'];
+      $this->type = $fields['type'];
+       
+    }
+  }
+  function __destruct() {
+    parent::__destruct();
+  }
+  function by_id($id){
+    $sql = "SELECT * FROM drink WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    $row = mysqli_fetch_array($result);
+
+    $this->id = $row['ID'];
+    $this->name = $row['name'];
+    $this->price = $row['price'];
+    $this->desc = $row['description'];
+   
+  }
+
+  function by_data($fields){
+    $this->name = $fields['name'];
+    $this->condiments_ID = $fields['condiments_ID'];
+    $this->id = $this->insert();
+  }
+
+  function insert($fields){
+    
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    $result = mysqli_query($this->conn,$sql);
+    return mysqli_insert_id($this->conn);
+  }
+
+  function update($fields , $id)
+  {
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+   //test function
+  function display(){
+    echo "$this->id <br> $this->name <br> $this->price";
+
+
+  }
+  function display_table_row(){
+
+    $values = array("ID"=>$this->id,"username"=>$this->username,"email"=>$this->email,"password"=>$this->password,"mobile"=>$this->mobile , "type"=>$this->type );
+    $json_object = json_encode($values); 
+    //$this->id = $fields['ID'];
+    
+    echo "<tr>
+    <th scope='row'>{$this->id}</th>
+
+    <td>{$this->username}</td>
+    <td>{$this->email} </td>
+    <td>{$this->mobile} </td>
+
+    <td>{$this->type} </td>
+    <td>
+    <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
+    <a href='admin_users.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
+    </td>
+    
+
+    </tr> ";
+  }
+
+  function get_name(){
+    return $this->name;
+  }
+
+
+}
+
+
 ?>
