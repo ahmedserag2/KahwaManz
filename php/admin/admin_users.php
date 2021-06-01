@@ -15,7 +15,11 @@
         <section class="section-1">
             <img src="../../images/cappucino.jpg" style="width:100%;height:30%" alt="Italian Trulli">
             <div class = "row" style = "margin:15px;">
-            
+            <form method = "get" >
+                
+                <input type = "text" id = "search" name = "search" >
+                <input type = "submit" class = "btn btn-warning" value = "search">
+            </form>
             </div>
             <div class = "row">
                 <div class = "col">
@@ -28,17 +32,19 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Drink's Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">mobile</th>
 
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
+
 
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
-                        $class = new Drink(0);
+                        $class = new User(0);
                         
                         $noOfItems = count($class->select_all());
                         $itemsPerPage = 3;
@@ -76,21 +82,21 @@
             <ul class="pagination">
                 <li class="page-item">
                 <?php if($currentPage > 0){ ?>
-                    <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage-1) ?>" aria-label="Previous"> 
+                    <a class="page-link" href="<?php echo "admin_users.php?p=".($currentPage-1) ?>" aria-label="Previous"> 
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span> <?php }?>
                 </a>
                 </li>
                 <?php for($i = 0; $i < $noOfPages; $i++){
                     $pNum = $i + 1;
-                    echo "<li class='page-item'><a class='page-link' href='admin_drinks.php?p={$i}'>{$pNum}</a></li>";
+                    echo "<li class='page-item'><a class='page-link' href='admin_users.php?p={$i}'>{$pNum}</a></li>";
 
 
                 }?>
                 
                 <?php if($currentPage < $noOfPages -1){ ?>
                 <li class="page-item">
-                <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage+1) ?>" aria-label="Next">
+                <a class="page-link" href="<?php echo "admin_users.php?p=".($currentPage+1) ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -115,7 +121,7 @@
 
 
 
-<!--add drink Modal -->
+<!--add user Modal -->
     <div class="modal modal-addItem fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -133,7 +139,7 @@
 
                    <div class = "form-group row">
 
-                        <label for = "nameAdd"  class = "col-sm-3">Drink's Name</label>
+                        <label for = "nameAdd"  class = "col-sm-3">user Name</label>
                         <div class = "col-sm-6">
                             <input type = "text" name = "nameAdd" id = "nameAdd" required>
                         </div>
@@ -141,19 +147,31 @@
 
                    <div class = "form-group row">
 
-                        <label for = "price"  class = "col-sm-3">Price</label>
+                        <label for = "emailAdd"  class = "col-sm-3">Email</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "priceAdd" id = "priceAdd" required>
+                            <input type = "text" name = "emailAdd" id = "emailAdd" required>
                         </div>
                    </div>
 
-                   <p><b>Description</b></p>
-                    <div class="form-group">
-                    <div class="col-sm-12">
-                        <textarea id="editor1" name="descriptionAdd" rows="10" cols="50" required></textarea>
-                    </div>
-                    
-                    </div>
+                   
+
+                   <div class = "form-group row">
+
+                        <label for = "passwordAdd"  class = "col-sm-3">password</label>
+                        <div class = "col-sm-6">
+                            <input type = "text" name = "passwordAdd" id = "passwordAdd" required>
+                        </div>
+                   </div>
+
+                   <div class = "form-group row">
+
+                        <label for = "mobileAdd"  class = "col-sm-3">mobile</label>
+                        <div class = "col-sm-6">
+                            <input type = "text" name = "mobileAdd" id = "mobileAdd" required>
+                        </div>
+                   </div>
+
+                   
 
                     
                     <div class="modal-footer">
@@ -191,7 +209,12 @@
 
                    <div class = "form-group row">
                         <input type = "hidden" name = "idEdit" id = "idEdit" required>
-                        <label for = "nameEdit"  class = "col-sm-3">Drink's Name</label>
+                        
+                   </div>
+
+                   <div class = "form-group row">
+
+                        <label for = "nameEdit"  class = "col-sm-3">user Name</label>
                         <div class = "col-sm-6">
                             <input type = "text" name = "nameEdit" id = "nameEdit" required>
                         </div>
@@ -199,19 +222,29 @@
 
                    <div class = "form-group row">
 
-                        <label for = "price"  class = "col-sm-3">Price</label>
+                        <label for = "emailEdit"  class = "col-sm-3">Email</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "priceEdit" id = "priceEdit" required>
+                            <input type = "text" name = "emailEdit" id = "emailEdit" required>
                         </div>
                    </div>
 
-                   <p><b>Description</b></p>
-                    <div class="form-group">
-                    <div class="col-sm-12">
-                        <textarea id="descriptionEdit" name="descriptionEdit" rows="10" cols="50" required></textarea>
-                    </div>
-                    
-                    </div>
+                   
+
+                   <div class = "form-group row">
+
+                        <label for = "passwordAdd"  class = "col-sm-3">password</label>
+                        <div class = "col-sm-6">
+                            <input type = "text" name = "passwordEdit" id = "passwordEdit" required>
+                        </div>
+                   </div>
+
+                   <div class = "form-group row">
+
+                        <label for = "mobileAdd"  class = "col-sm-3">mobile</label>
+                        <div class = "col-sm-6">
+                            <input type = "text" name = "mobileEdit" id = "mobileEdit" required>
+                        </div>
+                   </div>
 
                     
                     <div class="modal-footer">
@@ -235,9 +268,11 @@
 
     function setEditModal(data){
         document.getElementById("idEdit").value = data.ID;
-        document.getElementById("nameEdit").value = data.name;
-        document.getElementById("priceEdit").value = data.price;
-        document.getElementById("descriptionEdit").value = data.description;
+        document.getElementById("nameEdit").value = data.username;
+        document.getElementById("emailEdit").value = data.email;
+        document.getElementById("mobileEdit").value = data.mobile;
+        document.getElementById("passwordEdit").value = data.password;
+        
 
 
     }
@@ -255,27 +290,33 @@
     if(isset($_GET['nameAdd']))
     {
         
-        $name = $_GET['nameAdd'];
-        $price = $_GET['priceAdd'];
-        $description = $_GET['descriptionAdd'];
+        $username = $_GET['nameAdd'];
+        $email = $_GET['emailAdd'];
+        $mobile = $_GET['mobileAdd'];
+        $password = $_GET['passwordAdd'];
 
-        $drink = new Drink(null);
-        $drink->insert(array($name,$price,$description));
 
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        $user = new User(null);
+        //need to change to option select
+        $user->insert(array($username,$email,$password, $mobile,"customer"));
+
+        echo '<script>window.location.replace("admin_users.php");</script>';
     }
     // when editing a drink
     if(isset($_GET['nameEdit']))
     {
         $id = $_GET['idEdit'];
-        $name = $_GET['nameEdit'];
-        $description = $_GET['descriptionEdit'];
-        $price = $_GET['priceEdit'];
+        $username = $_GET['nameEdit'];
+        $email = $_GET['emailEdit'];
+        $mobile = $_GET['mobileEdit'];
+        $password = $_GET['passwordEdit'];
 
-        $drink = new Drink(null);
+
+        $user = new User(null);
+
         //put the feilds in the same order as in the db 
-        $drink->update(array($name,$price,$description), $id);
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        $user->update(array($username,$email,$password, $mobile,"customer"), $id);
+        echo '<script>window.location.replace("admin_users.php");</script>';
 
     }
 
@@ -283,9 +324,9 @@
     if(isset($_GET['delete']))
     {
         $id = $_GET['delete'];
-        $drink = new Drink(null);
-        $drink->delete($id);
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        $user = new User(null);
+        $user->delete($id);
+        echo '<script>window.location.replace("admin_users.php");</script>';
     }
 
 

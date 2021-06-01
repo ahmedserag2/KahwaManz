@@ -91,7 +91,7 @@ CREATE TABLE `orders` (
 
 CREATE TABLE `user` (
   `ID` int(11) NOT NULL,
-  `username` int(255) NOT NULL,
+  `username` varchar(254) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(255) NOT NULL,
   `mobile` varchar(11) NOT NULL,
