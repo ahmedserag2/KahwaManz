@@ -14,6 +14,13 @@
 
         <section class="section-1">
             <img src="../../images/cappucino.jpg" style="width:100%;height:30%" alt="Italian Trulli">
+            <div class = "row" style = "margin:15px;">
+            <form method = "get" >
+                
+                <input type = "text" id = "search" name = "search" >
+                <input type = "submit" class = "btn btn-warning" value = "search">
+            </form>
+            </div>
             <div class = "row">
                 <div class = "col">
                     
@@ -38,13 +45,23 @@
                         $class = new Drink(0);
                         
                         $noOfItems = count($class->select_all());
-                        $itemsPerPage = 10;
+                        $itemsPerPage = 3;
                         $currentPage = 0;
                         if(isset($_GET['p']))
                             $currentPage = $_GET['p'];
                         $noOfPages = ceil($noOfItems / $itemsPerPage);
-                        //assuming wer at page 0 and want to read 4 items
-                        $class = $class->select_pagiated($currentPage, $itemsPerPage);
+
+                       
+                        if(isset($_GET['search']))
+                        {
+                            $class = $class->select_all($_GET['search']);    
+                        }
+                        else
+                        {
+                            //assuming wer at page 0 and want to read 4 items select_pagiated(0, 4);    
+                            $class = $class->select_pagiated($currentPage, $itemsPerPage);    
+                        }
+                        
                         foreach ($class as $value) {
                             //var_dump($value);
                            $value->display_table_row();
@@ -55,6 +72,8 @@
                 </tbody>
                 </table>
             </div>
+        
+        <?php if(!isset($_GET['search']) || $_GET['search'] == ""){ ?>
         <div style="margin:10px;">
         <h5>Pages</h5>
         <nav aria-label="Page navigation example">
@@ -84,6 +103,7 @@
             </ul>
         </nav>
         </div>
+        <?php }?>
         </section>
 
     
@@ -225,6 +245,8 @@
 
 
     }
+
+   
 
 </script>
 

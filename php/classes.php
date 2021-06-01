@@ -19,8 +19,15 @@ abstract class Database
   abstract function insert($fields);
   abstract function update($fields , $id); // id not needed? id in instance
   abstract function delete($id);
-  function select_all(){
-    $sql = "SELECT * FROM $this->table_name";
+  function select_all($key = null){
+    if(isset($key))
+    {
+      $sql = "SELECT * FROM $this->table_name WHERE name like '%$key%'";
+    }
+    else{
+      $sql = "SELECT * FROM $this->table_name";
+    }
+    
     $result = mysqli_query($this->conn,$sql);
     $select_array = [];
     while ($row = mysqli_fetch_array($result)) {
@@ -36,10 +43,16 @@ abstract class Database
   }
 
 
-  function select_pagiated($pageNo , $itemsNo){
+  function select_pagiated($pageNo , $itemsNo, $key = null){
     $limit = $itemsNo;
     $offset = $pageNo * $itemsNo;
-    $sql = "SELECT * FROM $this->table_name LIMIT $limit OFFSET $offset";
+    if(isset($key)){
+      $sql = "SELECT * FROM $this->table_name WHERE name like '%$key%' LIMIT $limit OFFSET $offset";
+    }
+    else{
+      $sql = "SELECT * FROM $this->table_name LIMIT $limit OFFSET $offset";
+    }
+    
     $result = mysqli_query($this->conn,$sql);
     $select_array = [];
     while ($row = mysqli_fetch_array($result)) {
@@ -53,6 +66,8 @@ abstract class Database
     }
     return $select_array;
   }
+
+  
   // $where = "WHERE x = y"
   // function select_where($table_name,$where);
 }
