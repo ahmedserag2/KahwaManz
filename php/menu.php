@@ -1,28 +1,76 @@
+<?php include 'classes.php'; ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../master.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <meta charset="utf-8">
     <title></title>
-  </head>
-  <style media="screen">
-    .add{
-      background-color: #954B00;
-      border-color: #954B00;
-      border-radius: 8px;
-      padding: 6px;
-    }
-  </style>
-  <body>
-    <table>
-    <?php
-      include_once 'classes.php';
-      $drinks = new Drink(0);
-      $drinks = $drinks->select_all();
-      foreach ($drinks as $drink) {
-        $drink->display_menu_item();
+    <style media="screen">
+      table{
+        font-size: 50px;
+        width: 90%;
       }
-    ?>
-    </table>
+      .drink_img{
+        max-width: 300px;
+        height: auto;
+        border-radius: 40px;
+      }
+      .desc{
+        color: #4D4D4D;
+        font-size: 40px;
+      }
+      .add{
+        background-color: #954B00;
+        border-color: #954B00;
+        border-radius: 8px;
+        padding: 6px;
+      }
+      input[type="text"]{
+        font-family: "Roboto";
+        padding-left: 95px;
+        font-size: 50px;
+        margin: 0;
+        position: absolute;
+        bottom: 96%;
+        left: 15%;
+        width: 60%;
+        height: 100px;
+        box-shadow: 0px 6px grey;
+        z-index:10;
+        border: none;
+        border-radius: 50px;
+      }
+      .custom{
+        font-size: 40px;
+        color: #954B00;
+        position: relative;
+        margin-left: 30%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="bg">
+        <img src="../images/images.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="menu-bg-c">
+      <a class="custom" href="customize.php" >Customise your drink</a><br><br>
+      <input type="text" name="" placeholder="  Search...">
+      <table>
+      <?php
+        include_once 'classes.php';
+        $drinks = new Drink(0);
+        $drinks = $drinks->select_all();
+        foreach ($drinks as $drink) {
+          $drink->display_menu_item();
+        }
+      ?>
+      </table>
+    </div>
+
 
   </body>
 </html>

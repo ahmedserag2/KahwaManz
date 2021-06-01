@@ -71,7 +71,7 @@ class Drink extends Database
       $this->price = $fields['price'];
       $this->desc = $fields['description'];
       $this->condiments_ID = [];
-      $this->image = "";
+      $this->image = $fields['image'];
     }
   }
   function __destruct() {
@@ -86,6 +86,7 @@ class Drink extends Database
     $this->name = $row['name'];
     $this->price = $row['price'];
     $this->desc = $row['description'];
+    $this->image = $row['image'];
     //$beans_temp = new Beans(0);
     //$beans_temp->by_id($row['beans_ID']);
     //$this->beans = $beans_temp;
@@ -101,8 +102,9 @@ class Drink extends Database
 
   function by_data($fields){
     $this->name = $fields['name'];
-    $this->condiments_ID = $fields['condiments_ID'];
-    $this->beans = $fields['beans'];
+    // $this->condiments_ID = $fields['condiments_ID'];
+    $this->desc = $row['description'];
+    $this->image = $fields['image'];
     $this->id = $this->insert();
   }
 
@@ -142,19 +144,19 @@ class Drink extends Database
     $result = mysqli_query($this->conn,$sql);
     return $result;
   }
-   //test function
+
   function display_menu_item(){
     echo
     "<tr>
-    <td><img style='max-width:150px; max-height:150px;' src='..\Images\menu.jpg' alt='Image not found...'></td>
+    <td><img class='drink_img' src='..\Images\Drinks\\$this->image' alt='Image not found...'></td>
 
     <td style='width:75%'>
-    $this->name<br>
-    <span style='color:darkgrey'>$this->desc</span><br>
-    $this->price
+    <span>$this->name<br></span>
+    <span class='desc'>$this->desc</span><br>
+    <span>$this->price<br></span>
     </td>
 
-    <td> <button class='add' type='button' name='button'><img src='..\Images\plus-16 (1).png' alt='Image not found...'></button> </td>
+    <td> <a href='index.php'><button class='add' type='button' name='button'><img src='..\Images\plus-16 (1).png' alt='Image not found...'></button> </a></td>
     </tr>";
   }
   function display_table_row(){
