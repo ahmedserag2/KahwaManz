@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2021 at 06:04 PM
+-- Generation Time: Jun 01, 2021 at 09:09 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -21,6 +21,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `coffeeshop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beverages`
+--
+
+CREATE TABLE `beverages` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` double(10,2) NOT NULL,
+  `type` enum('sauce','sweetener','creamer','milk') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -54,8 +67,7 @@ CREATE TABLE `drink` (
 --
 
 INSERT INTO `drink` (`ID`, `name`, `price`, `description`, `image`) VALUES
-(1, 'test1', 22.00, 'desc1', 'test'),
-(2, 'test2', 44.00, 'desc2', '');
+(1, 'Cappucino', 36.00, 'A coffee drink that today is typically composed of double espresso and\r\nhot milk, with the surface topped with foamed milk.\r\n', '');
 
 -- --------------------------------------------------------
 
@@ -91,6 +103,12 @@ CREATE TABLE `user` (
 --
 
 --
+-- Indexes for table `beverages`
+--
+ALTER TABLE `beverages`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `condiment`
 --
 ALTER TABLE `condiment`
@@ -118,6 +136,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `beverages`
+--
+ALTER TABLE `beverages`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `condiment`
