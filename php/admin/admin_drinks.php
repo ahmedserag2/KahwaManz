@@ -15,11 +15,7 @@
         <section class="section-1">
             <img src="../../images/cappucino.jpg" style="width:100%;height:30%" alt="Italian Trulli">
             <div class = "row" style = "margin:15px;">
-            <form method = "get" >
-                
-                <input type = "text" id = "search" name = "search" >
-                <input type = "submit" class = "btn btn-warning" value = "search">
-            </form>
+            
             </div>
             <div class = "row">
                 <div class = "col">
