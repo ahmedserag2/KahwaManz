@@ -280,3 +280,54 @@
    
 
 </script>
+
+
+<?php 
+
+//submiting values from modal into db 
+    //thats if wer adding a new drink to db 
+    
+    if(isset($_GET['nameAdd']))
+    {
+        
+        $username = $_GET['nameAdd'];
+        $email = $_GET['emailAdd'];
+        $mobile = $_GET['mobileAdd'];
+        $password = $_GET['passwordAdd'];
+
+
+        $user = new User(null);
+        //need to change to option select
+        $user->insert(array($username,$email,$password, $mobile,"customer"));
+
+        echo '<script>window.location.replace("admin_users.php");</script>';
+    }
+    // when editing a drink
+    if(isset($_GET['nameEdit']))
+    {
+        $id = $_GET['idEdit'];
+        $username = $_GET['nameEdit'];
+        $email = $_GET['emailEdit'];
+        $mobile = $_GET['mobileEdit'];
+        $password = $_GET['passwordEdit'];
+
+
+        $user = new User(null);
+
+        //put the feilds in the same order as in the db 
+        $user->update(array($username,$email,$password, $mobile,"customer"), $id);
+        echo '<script>window.location.replace("admin_users.php");</script>';
+
+    }
+
+    //checking for delete request
+    if(isset($_GET['delete']))
+    {
+        $id = $_GET['delete'];
+        $user = new User(null);
+        $user->delete($id);
+        echo '<script>window.location.replace("admin_users.php");</script>';
+    }
+
+
+?>
