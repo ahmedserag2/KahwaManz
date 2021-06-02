@@ -9,7 +9,13 @@
     <style media="screen">
       table{
         font-size: 50px;
-        width: 90%;
+        width: 99%;
+        border-collapse: collapse;
+      }
+      tr{
+        border-bottom: 4px solid darkgrey;
+        cursor: pointer;
+        text
       }
       .drink_img{
         max-width: 300px;
@@ -42,14 +48,28 @@
         border-radius: 50px;
       }
       .custom{
-        font-size: 40px;
-        color: #954B00;
+        font-size: 45px;;
         position: relative;
-        margin-left: 30%;
+        left: 27%;
+        color: #954B00;
       }
     </style>
+    <script src="../js/clamp.min.js"></script>
+    <script type="text/javascript">
+      function toOrder(id){
+        window.location="OrderDetails.php?id="+id;
+      }
+      function overflow(){
+        var desc = document.getElementsByClassName("desc");
+        for (var i = 0; i < desc.length; i++) {
+          $clamp(desc[i], {clamp: 2});
+        }
+      }
+
+
+    </script>
   </head>
-  <body>
+  <body onload="overflow()">
     <div class="container">
       <div class="bg">
         <img src="../images/images.jpg" alt="">
@@ -57,8 +77,8 @@
     </div>
 
     <div class="menu-bg-c">
-      <a class="custom" href="customize.php" >Customise your drink</a><br><br>
-      <input type="text" name="" placeholder="  Search...">
+      <input type="text" name="" placeholder="  Search..."><br><br><br><br><br>
+        <a class="custom" href="customize.php" >Customise your drink</a> <br><br>
       <table>
       <?php
         include_once 'classes.php';

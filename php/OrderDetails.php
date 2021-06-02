@@ -4,7 +4,7 @@ include 'classes.php';
 
 $drink = new Drink(null);
 
-$drink->by_id(1);
+$drink->by_id($_GET['id']);
  ?>
 <html lang="en" dir="ltr">
   <head>

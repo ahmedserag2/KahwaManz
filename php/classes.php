@@ -27,7 +27,7 @@ abstract class Database
     else{
       $sql = "SELECT * FROM $this->table_name";
     }
-    
+
     $result = mysqli_query($this->conn,$sql);
     $select_array = [];
     while ($row = mysqli_fetch_array($result)) {
@@ -52,7 +52,7 @@ abstract class Database
     else{
       $sql = "SELECT * FROM $this->table_name LIMIT $limit OFFSET $offset";
     }
-    
+
     $result = mysqli_query($this->conn,$sql);
     $select_array = [];
     while ($row = mysqli_fetch_array($result)) {
@@ -67,7 +67,7 @@ abstract class Database
     return $select_array;
   }
 
-  
+
   // $where = "WHERE x = y"
   // function select_where($table_name,$where);
 }
@@ -161,17 +161,15 @@ class Drink extends Database
   }
 
   function display_menu_item(){
+    $maxprice = number_format($this->get_price() + 14, 2, '.', '');
     echo
-    "<tr>
-    <td><img class='drink_img' src='..\Images\Drinks\\$this->image' alt='Image not found...'></td>
-
-    <td style='width:75%'>
-    <span>$this->name<br></span>
-    <span class='desc'>$this->desc</span><br>
-    <span>$this->price<br></span>
-    </td>
-
-    <td> <a href='index.php'><button class='add' type='button' name='button'><img src='..\Images\plus-16 (1).png' alt='Image not found...'></button> </a></td>
+    "<tr onclick='toOrder($this->id)'>
+      <td><img class='drink_img' src='..\Images\Drinks\\$this->image' alt='Image not found...'></td>
+      <td >
+        <span>$this->name<br></span>
+        <span class='desc'>$this->desc</span>
+        <span>$this->price - $maxprice</span>
+      </td>
     </tr>";
   }
   function display_table_row(){
@@ -400,7 +398,7 @@ class User extends Database
     parent::__construct();
     //pass fields null temporarly
     if($fields){
-      
+
       $this->id = $fields['ID'];
       $this->username = $fields['username'];
       $this->email = $fields['email'];
@@ -408,7 +406,7 @@ class User extends Database
 
       $this->mobile = $fields['mobile'];
       $this->type = $fields['type'];
-       
+
     }
   }
   function __destruct() {
@@ -423,7 +421,7 @@ class User extends Database
     $this->name = $row['name'];
     $this->price = $row['price'];
     $this->desc = $row['description'];
-   
+
   }
 
   function by_data($fields){
@@ -433,7 +431,7 @@ class User extends Database
   }
 
   function insert($fields){
-    
+
     $values = implode("','",array_values($fields));
     $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
     $result = mysqli_query($this->conn,$sql);
@@ -476,9 +474,9 @@ class User extends Database
   function display_table_row(){
 
     $values = array("ID"=>$this->id,"username"=>$this->username,"email"=>$this->email,"password"=>$this->password,"mobile"=>$this->mobile , "type"=>$this->type );
-    $json_object = json_encode($values); 
+    $json_object = json_encode($values);
     //$this->id = $fields['ID'];
-    
+
     echo "<tr>
     <th scope='row'>{$this->id}</th>
 
@@ -491,7 +489,7 @@ class User extends Database
     <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
     <a href='admin_users.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
     </td>
-    
+
 
     </tr> ";
   }
