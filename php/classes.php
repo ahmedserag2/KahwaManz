@@ -42,6 +42,16 @@ abstract class Database
     return $select_array;
   }
 
+  function last_insert()
+  {
+    $lastId;
+    $sql = "SELECT MAX(ID) as last FROM $this->table_name";
+    $result = mysqli_query($this->conn,$sql);
+    $lastId = mysqli_fetch_array($result);
+    $lastId = $lastId['last'];
+    return $lastId;
+  }
+
 
   function select_pagiated($pageNo , $itemsNo, $key = null){
     $limit = $itemsNo;
@@ -77,7 +87,7 @@ class Drink extends Database
   private $id, $name, $condiments_ID, $beans,$price,$desc,$image;
   protected $table_name = "drink";
   //changed desc to description to match column name in db
-  protected $columns = "name,price,description";
+  protected $columns = "name,price,description,image";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -121,6 +131,10 @@ class Drink extends Database
     $this->desc = $row['description'];
     $this->image = $fields['image'];
     $this->id = $this->insert();
+  }
+  function get_image()
+  {
+    return $this->image;
   }
 
   function insert($fields){

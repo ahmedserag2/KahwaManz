@@ -17,7 +17,7 @@
             <div class = "row" style = "margin:15px;">
             <form method = "get" >
                 
-                <input type = "text" id = "search" name = "search" >
+                <input type = "text" id = "search" name = "search" rq>
                 <input type = "submit" class = "btn btn-warning" value = "search">
             </form>
             </div>
@@ -149,7 +149,7 @@
 
                         <label for = "emailAdd"  class = "col-sm-3">Email</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "emailAdd" id = "emailAdd" required>
+                            <input type = "email" name = "emailAdd" id = "emailAdd" required>
                         </div>
                    </div>
 
@@ -159,7 +159,7 @@
 
                         <label for = "passwordAdd"  class = "col-sm-3">password</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "passwordAdd" id = "passwordAdd" required>
+                            <input type = "password" name = "passwordAdd" id = "passwordAdd" required>
                         </div>
                    </div>
 
@@ -224,7 +224,7 @@
 
                         <label for = "emailEdit"  class = "col-sm-3">Email</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "emailEdit" id = "emailEdit" required>
+                            <input type = "email" name = "emailEdit" id = "emailEdit" required>
                         </div>
                    </div>
 
@@ -234,7 +234,7 @@
 
                         <label for = "passwordAdd"  class = "col-sm-3">password</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "passwordEdit" id = "passwordEdit" required>
+                            <input type = "password" name = "passwordEdit" id = "passwordEdit" required>
                         </div>
                    </div>
 
