@@ -146,7 +146,7 @@
 
                         <label for = "price"  class = "col-sm-3">Price</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "priceAdd" id = "priceAdd" required>
+                            <input type = "number" step="0.01" id = "priceAdd" required>
                         </div>
                    </div>
 
@@ -161,7 +161,7 @@
                     Picture:
                     <div class="form-group">
                         <div class="col-sm-12">
-                                <input type="file" name="fileToUpload" id="fileToUpload">
+                                <input type="file" name="fileToUpload" id="fileToUpload" required>
 
                         </div>
                     
@@ -213,7 +213,7 @@
 
                         <label for = "price"  class = "col-sm-3">Price</label>
                         <div class = "col-sm-6">
-                            <input type = "text" name = "priceEdit" id = "priceEdit" required>
+                            <input type = "number" step="0.01" name = "priceEdit" id = "priceEdit" required>
                         </div>
                    </div>
 
@@ -228,7 +228,7 @@
                     Picture:
                     <div class="form-group">
                         <div class="col-sm-12">
-                                <input type="file" name="fileToUpload" id="fileToUpload">
+                                <input type="file" name="fileToUpload" id="fileToUpload" >
                         </div>
                     
                     </div>
@@ -284,7 +284,7 @@
         move_uploaded_file($_FILES['fileToUpload']['tmp_name'],$pics_path .$last_id);
         $drink->insert(array($name,$price,$description, $last_id));
 
-        //echo '<script>window.location.replace("admin_drinks.php");</script>';
+        echo '<script>window.location.replace("admin_drinks.php");</script>';
     }
     // when editing a drink
     if(isset($_POST['nameEdit']))
