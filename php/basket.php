@@ -229,6 +229,6 @@ X
 
 <script>
 function checkout() {
-  alert("Your order is successfully placed ")
+  alert("Your order is successfully placed. ")
 }
 </script>
