@@ -1,6 +1,9 @@
 
 <body>
-    <?php include_once "./includes/admin_header.php";?>
+    <?php include_once "./includes/admin_header.php";
+    
+        $pics_path = "../../Images/Drinks/";
+    ?>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -159,6 +162,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                                 <input type="file" name="fileToUpload" id="fileToUpload">
+
                         </div>
                     
                     </div>
@@ -274,13 +278,13 @@
         $name = $_POST['nameAdd'];
         $price = $_POST['priceAdd'];
         $description = $_POST['descriptionAdd'];
-       
-        $file_name = $_FILES['fileToUpload']['name'];
-        move_uploaded_file($_FILES['fileToUpload']['tmp_name'],"../drinkPics/" .$file_name);
         $drink = new Drink(null); 
-        $drink->insert(array($name,$price,$description, $file_name));
+        $last_id = $drink->last_insert("drink") + 1;
+        $file_name = $_FILES['fileToUpload']['name'];
+        move_uploaded_file($_FILES['fileToUpload']['tmp_name'],$pics_path .$last_id);
+        $drink->insert(array($name,$price,$description, $last_id));
 
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        //echo '<script>window.location.replace("admin_drinks.php");</script>';
     }
     // when editing a drink
     if(isset($_POST['nameEdit']))
@@ -288,15 +292,15 @@
         $id = $_POST['idEdit'];
         $drink = new Drink(null);
         $drink->by_id($id);
-        $old_image_name = $drink->get_image();
         $name = $_POST['nameEdit'];
         $description = $_POST['descriptionEdit'];
         $price = $_POST['priceEdit'];
         $file_name = $_FILES['fileToUpload']['name'];
-        move_uploaded_file($_FILES['fileToUpload']['tmp_name'],"../drinkPics/" .$old_image_name);
+        if(isset($_FILES))
+            move_uploaded_file($_FILES['fileToUpload']['tmp_name'],$pics_path.$id);
         
         //put the feilds in the same order as in the db 
-        $drink->update(array($name,$price,$description, $file_name), $id);
+        $drink->update(array($name,$price,$description, $id), $id);
         echo '<script>window.location.replace("admin_drinks.php");</script>';
 
     }
