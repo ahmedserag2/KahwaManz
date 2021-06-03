@@ -28,7 +28,7 @@ $drink->by_id($_GET['id']);
       $quantity = number_format($_POST['quantity'],2, '.', '');
       $array = array($name, $size, $quantity);
 
-      $_SESSION['drinks_basket'] = $array;
+      array_push($_SESSION['drinks_basket'],$array);
     }
 
      ?>
