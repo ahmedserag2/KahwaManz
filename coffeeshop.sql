@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2021 at 04:05 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.2.12
+-- Generation Time: Jun 01, 2021 at 09:09 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -58,15 +58,16 @@ CREATE TABLE `drink` (
   `ID` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `price` double(10,2) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `drink`
 --
 
-INSERT INTO `drink` (`ID`, `name`, `price`, `description`) VALUES
-(1, 'Cappucino', 36.00, 'A coffee drink that today is typically composed of double espresso and\r\nhot milk, with the surface topped with foamed milk.\r\n');
+INSERT INTO `drink` (`ID`, `name`, `price`, `description`, `image`) VALUES
+(1, 'Cappucino', 36.00, 'A coffee drink that today is typically composed of double espresso and\r\nhot milk, with the surface topped with foamed milk.\r\n', '');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,7 @@ INSERT INTO `drink` (`ID`, `name`, `price`, `description`) VALUES
 CREATE TABLE `orders` (
   `ID` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `items` text,
+  `items` text DEFAULT NULL,
   `quantity` text NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -90,7 +91,7 @@ CREATE TABLE `orders` (
 
 CREATE TABLE `user` (
   `ID` int(11) NOT NULL,
-  `username` int(255) NOT NULL,
+  `username` varchar(254) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(255) NOT NULL,
   `mobile` varchar(11) NOT NULL,

@@ -30,7 +30,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Drink's Name</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Type</th>
 
                         <th scope="col">Action</th>
 
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                        $class = new Drink(0);
+                        $class = new Beverage(0);
                         
                         $noOfItems = count($class->select_all());
                         $itemsPerPage = 3;
@@ -76,21 +76,21 @@
             <ul class="pagination">
                 <li class="page-item">
                 <?php if($currentPage > 0){ ?>
-                    <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage-1) ?>" aria-label="Previous"> 
+                    <a class="page-link" href="<?php echo "admin_beverages.php?p=".($currentPage-1) ?>" aria-label="Previous"> 
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span> <?php }?>
                 </a>
                 </li>
                 <?php for($i = 0; $i < $noOfPages; $i++){
                     $pNum = $i + 1;
-                    echo "<li class='page-item'><a class='page-link' href='admin_drinks.php?p={$i}'>{$pNum}</a></li>";
+                    echo "<li class='page-item'><a class='page-link' href='admin_beverages.php?p={$i}'>{$pNum}</a></li>";
 
 
                 }?>
                 
                 <?php if($currentPage < $noOfPages -1){ ?>
                 <li class="page-item">
-                <a class="page-link" href="<?php echo "admin_drinks.php?p=".($currentPage+1) ?>" aria-label="Next">
+                <a class="page-link" href="<?php echo "admin_beverages.php?p=".($currentPage+1) ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -121,7 +121,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#9e7540;">
 
-                    <h5 class="modal-title" id="addItemModalLabel">Add a drink</h5>
+                    <h5 class="modal-title" id="addItemModalLabel">Add a Beverage</h5>
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -133,7 +133,7 @@
 
                    <div class = "form-group row">
 
-                        <label for = "nameAdd"  class = "col-sm-3">Drink's Name</label>
+                        <label for = "nameAdd"  class = "col-sm-3">beverage's Name</label>
                         <div class = "col-sm-6">
                             <input type = "text" name = "nameAdd" id = "nameAdd" required>
                         </div>
@@ -147,13 +147,21 @@
                         </div>
                    </div>
 
-                   <p><b>Description</b></p>
-                    <div class="form-group">
-                    <div class="col-sm-12">
-                        <textarea id="editor1" name="descriptionAdd" rows="10" cols="50" required></textarea>
-                    </div>
-                    
-                    </div>
+                   <div class = "form-group row">
+
+                        <label for = "type"  class = "col-sm-3">type</label>
+                        <div class = "col-sm-6">
+                            <select name = "typeAdd" id="typeAdd">
+                                <option value="" disabled selected>Choose option</option>
+                                <option value="sauce">suace</option>
+                                <option value="sweetner">sweetner</option>
+                                <option value="creamer">creamer</option>
+                                <option value="milk">milk</option>
+                            </select>
+                        </div>
+                   </div>
+
+                   
 
                     
                     <div class="modal-footer">
@@ -179,7 +187,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#9e7540;">
 
-                    <h5 class="modal-title" id="editItemModalLabel">Edit a drink</h5>
+                    <h5 class="modal-title" id="editItemModalLabel">Edit Beverage</h5>
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -191,7 +199,7 @@
 
                    <div class = "form-group row">
                         <input type = "hidden" name = "idEdit" id = "idEdit" required>
-                        <label for = "nameEdit"  class = "col-sm-3">Drink's Name</label>
+                        <label for = "nameEdit"  class = "col-sm-3">Beverage's Name</label>
                         <div class = "col-sm-6">
                             <input type = "text" name = "nameEdit" id = "nameEdit" required>
                         </div>
@@ -205,13 +213,21 @@
                         </div>
                    </div>
 
-                   <p><b>Description</b></p>
-                    <div class="form-group">
-                    <div class="col-sm-12">
-                        <textarea id="descriptionEdit" name="descriptionEdit" rows="10" cols="50" required></textarea>
-                    </div>
-                    
-                    </div>
+                   <div class = "form-group row">
+
+                        <label for = "type"  class = "col-sm-3">type</label>
+                        <div class = "col-sm-6">
+                            <select name = "typeEdit" id="typeEdit">
+                                <option value="" disabled selected>Choose option</option>
+                                <option value="sauce">sauce</option>
+                                <option value="sweetner">sweetner</option>
+                                <option value="creamer">creamer</option>
+                                <option value="milk">milk</option>
+                            </select>
+                        </div>
+                   </div>
+
+                   
 
                     
                     <div class="modal-footer">
@@ -237,7 +253,7 @@
         document.getElementById("idEdit").value = data.ID;
         document.getElementById("nameEdit").value = data.name;
         document.getElementById("priceEdit").value = data.price;
-        document.getElementById("descriptionEdit").value = data.description;
+        document.getElementById("typeEdit").value = data.type;
 
 
     }
@@ -257,25 +273,24 @@
         
         $name = $_GET['nameAdd'];
         $price = $_GET['priceAdd'];
-        $description = $_GET['descriptionAdd'];
+        $type = $_GET['typeAdd'];
 
-        $drink = new Drink(null);
-        $drink->insert(array($name,$price,$description));
+        $drink = new Beverage(null);
+        $drink->insert(array($name,$price,$type));
 
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        echo '<script>window.location.replace("admin_beverages.php");</script>';
     }
     // when editing a drink
     if(isset($_GET['nameEdit']))
     {
         $id = $_GET['idEdit'];
         $name = $_GET['nameEdit'];
-        $description = $_GET['descriptionEdit'];
         $price = $_GET['priceEdit'];
-
-        $drink = new Drink(null);
+        $type = $_GET['typeEdit'];
+        $drink = new Beverage(null);
         //put the feilds in the same order as in the db 
-        $drink->update(array($name,$price,$description), $id);
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        $drink->update(array($name,$price,$type), $id);
+        echo '<script>window.location.replace("admin_beverages.php");</script>';
 
     }
 
@@ -283,9 +298,9 @@
     if(isset($_GET['delete']))
     {
         $id = $_GET['delete'];
-        $drink = new Drink(null);
+        $drink = new Beverage(null);
         $drink->delete($id);
-        echo '<script>window.location.replace("admin_drinks.php");</script>';
+        echo '<script>window.location.replace("admin_beverages.php");</script>';
     }
 
 
