@@ -225,8 +225,8 @@ class Drink extends Database
 
 class Condiment extends Database
 {
-  private $id, $name, $price, $type;
-  protected $columns = "name,price,type";
+  private $id, $name, $price;
+  protected $columns = "name,price";
   protected $table_name = "condiment";
   function __construct($fields){
     parent::__construct();
@@ -234,7 +234,6 @@ class Condiment extends Database
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
       $this->price = $fields['price'];
-      $this->type = $fields['type'];
     }
   }
   function __destruct() {
@@ -247,13 +246,11 @@ class Condiment extends Database
     $this->id = $row['ID'];
     $this->name = $row['name'];
     $this->price = $row['price'];
-    $this->type = $row['type'];
   }
 
   function by_data($fields){
     $this->name = $fields['name'];
     $this->price = $fields['price'];
-    $this->type = $fields['type'];
     $this->id = $this->insert();
   }
 
@@ -316,8 +313,8 @@ class Condiment extends Database
 
 class Beverage extends Database
 {
-  private $id, $name, $price, $type;
-  protected $columns = "name,price,type";
+  private $id, $name, $price;
+  protected $columns = "name,price";
   protected $table_name = "beverages";
   function __construct($fields){
     parent::__construct();
@@ -325,7 +322,6 @@ class Beverage extends Database
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
       $this->price = $fields['price'];
-      $this->type = $fields['type'];
     }
   }
   function __destruct() {
@@ -338,13 +334,11 @@ class Beverage extends Database
     $this->id = $row['ID'];
     $this->name = $row['name'];
     $this->price = $row['price'];
-    $this->type = $row['type'];
   }
 
   function by_data($fields){
     $this->name = $fields['name'];
     $this->price = $fields['price'];
-    $this->type = $fields['type'];
     $this->id = $this->insert();
   }
 
@@ -393,10 +387,6 @@ class Beverage extends Database
 
   function get_name(){
     return $this->name;
-  }
-
-  function get_type(){
-    return $this->type;
   }
 
   function get_price(){
