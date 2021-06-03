@@ -41,7 +41,7 @@
                         $class = new Drink(0);
                         
                         $noOfItems = count($class->select_all());
-                        $itemsPerPage = 3;
+                        $itemsPerPage = 10;
                         $currentPage = 0;
                         if(isset($_GET['p']))
                             $currentPage = $_GET['p'];
@@ -116,7 +116,7 @@
 
 
 <!--add drink Modal -->
-    <div class="modal modal-addItem fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal modal-addItem fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#9e7540;">
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="modal-body my-custom-scrollbar">
-                <form method = "get" action="">
+                <form method = "post" action="" enctype="multipart/form-data">
 
                    <div class = "form-group row">
 
@@ -152,6 +152,14 @@
                     <div class="col-sm-12">
                         <textarea id="editor1" name="descriptionAdd" rows="10" cols="50" required></textarea>
                     </div>
+                    
+                    </div>
+
+                    Picture:
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                                <input type="file" name="fileToUpload" id="fileToUpload">
+                        </div>
                     
                     </div>
 
@@ -187,7 +195,7 @@
                 </div>
 
                 <div class="modal-body my-custom-scrollbar">
-                <form method = "get" action="">
+                <form method = "post" action="" enctype="multipart/form-data">
 
                    <div class = "form-group row">
                         <input type = "hidden" name = "idEdit" id = "idEdit" required>
@@ -210,6 +218,14 @@
                     <div class="col-sm-12">
                         <textarea id="descriptionEdit" name="descriptionEdit" rows="10" cols="50" required></textarea>
                     </div>
+                    
+                    </div>
+
+                    Picture:
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                                <input type="file" name="fileToUpload" id="fileToUpload">
+                        </div>
                     
                     </div>
 
@@ -252,29 +268,35 @@
 //submiting values from modal into db 
     //thats if wer adding a new drink to db 
     
-    if(isset($_GET['nameAdd']))
+    if(isset($_POST['nameAdd']))
     {
         
-        $name = $_GET['nameAdd'];
-        $price = $_GET['priceAdd'];
-        $description = $_GET['descriptionAdd'];
-
-        $drink = new Drink(null);
-        $drink->insert(array($name,$price,$description));
+        $name = $_POST['nameAdd'];
+        $price = $_POST['priceAdd'];
+        $description = $_POST['descriptionAdd'];
+       
+        $file_name = $_FILES['fileToUpload']['name'];
+        move_uploaded_file($_FILES['fileToUpload']['tmp_name'],"../drinkPics/" .$file_name);
+        $drink = new Drink(null); 
+        $drink->insert(array($name,$price,$description, $file_name));
 
         echo '<script>window.location.replace("admin_drinks.php");</script>';
     }
     // when editing a drink
-    if(isset($_GET['nameEdit']))
+    if(isset($_POST['nameEdit']))
     {
-        $id = $_GET['idEdit'];
-        $name = $_GET['nameEdit'];
-        $description = $_GET['descriptionEdit'];
-        $price = $_GET['priceEdit'];
-
+        $id = $_POST['idEdit'];
         $drink = new Drink(null);
+        $drink->by_id($id);
+        $old_image_name = $drink->get_image();
+        $name = $_POST['nameEdit'];
+        $description = $_POST['descriptionEdit'];
+        $price = $_POST['priceEdit'];
+        $file_name = $_FILES['fileToUpload']['name'];
+        move_uploaded_file($_FILES['fileToUpload']['tmp_name'],"../drinkPics/" .$old_image_name);
+        
         //put the feilds in the same order as in the db 
-        $drink->update(array($name,$price,$description), $id);
+        $drink->update(array($name,$price,$description, $file_name), $id);
         echo '<script>window.location.replace("admin_drinks.php");</script>';
 
     }

@@ -77,7 +77,7 @@ class Drink extends Database
   private $id, $name, $condiments_ID, $beans,$price,$desc,$image;
   protected $table_name = "drink";
   //changed desc to description to match column name in db
-  protected $columns = "name,price,description";
+  protected $columns = "name,price,description,image";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -121,6 +121,10 @@ class Drink extends Database
     $this->desc = $row['description'];
     $this->image = $fields['image'];
     $this->id = $this->insert();
+  }
+  function get_image()
+  {
+    return $this->image;
   }
 
   function insert($fields){
