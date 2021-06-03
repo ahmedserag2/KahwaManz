@@ -217,6 +217,10 @@ class Drink extends Database
     return $this->price;
   }
 
+  function get_image(){
+    return $this->image;
+  }
+
 }
 
 class Condiment extends Database
