@@ -1,3 +1,6 @@
+
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
 <style media="screen">
 
 <head>
@@ -7,10 +10,14 @@
 body, html {
 height: 100%;
 }
+.cointainer
+{
 
+  background-color:rgba(255, 255, 255, 1);
+}
 .bg {
 /* The image used */
-background-image: url("../images/background.jpg");
+background-image: url("../images/background.png");
 /* Full height */
 height: 100%;
 
@@ -26,12 +33,14 @@ a
   display: inline-block;
   position:fixed;
   top: 90%;
-  left: 42.5%;
+  left: 40.5%;
   text-decoration: none;
   font-size: 30px;
+  font-family:Roboto;
+
 
 }
-p
+span
 {
   position:fixed;
   top: 30%;
@@ -39,14 +48,16 @@ p
   text-align: center;
   color: #c6c6c6;
   font-size: 30px;
-  font-weight: bold;
-
+  font-weight: 900px;
+  font-family:Roboto;
+  text-shadow:1px 0 0 #000000;
 }
 }
 
 </style>
-
+<div class="cointainer">
 <div class="bg">
-<p>  "A bad day with coffee is better <br> than a good day without it."  </p>
+<span>  "A bad day with coffee is better <br> than a good day without it."  </span>
 <a href="menu.php">Browse Menu</a>
+</div>
 </div>
