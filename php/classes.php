@@ -42,6 +42,16 @@ abstract class Database
     return $select_array;
   }
 
+  function last_insert()
+  {
+    $lastId;
+    $sql = "SELECT MAX(ID) as last FROM $this->table_name";
+    $result = mysqli_query($this->conn,$sql);
+    $lastId = mysqli_fetch_array($result);
+    $lastId = $lastId['last'];
+    return $lastId;
+  }
+
 
   function select_pagiated($pageNo , $itemsNo, $key = null){
     $limit = $itemsNo;
@@ -77,7 +87,7 @@ class Drink extends Database
   private $id, $name, $condiments_ID, $beans,$price,$desc,$image;
   protected $table_name = "drink";
   //changed desc to description to match column name in db
-  protected $columns = "name,price,description";
+  protected $columns = "name,price,description,image";
   function __construct($fields){
     parent::__construct();
     if($fields){
@@ -121,6 +131,10 @@ class Drink extends Database
     $this->desc = $row['description'];
     $this->image = $fields['image'];
     $this->id = $this->insert();
+  }
+  function get_image()
+  {
+    return $this->image;
   }
 
   function insert($fields){
@@ -203,12 +217,16 @@ class Drink extends Database
     return $this->price;
   }
 
+  function get_image(){
+    return $this->image;
+  }
+
 }
 
 class Condiment extends Database
 {
-  private $id, $name, $price, $type;
-  protected $columns = "name,price,type";
+  private $id, $name, $price;
+  protected $columns = "name,price";
   protected $table_name = "condiment";
   function __construct($fields){
     parent::__construct();
@@ -216,7 +234,6 @@ class Condiment extends Database
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
       $this->price = $fields['price'];
-      $this->type = $fields['type'];
     }
   }
   function __destruct() {
@@ -229,13 +246,11 @@ class Condiment extends Database
     $this->id = $row['ID'];
     $this->name = $row['name'];
     $this->price = $row['price'];
-    $this->type = $row['type'];
   }
 
   function by_data($fields){
     $this->name = $fields['name'];
     $this->price = $fields['price'];
-    $this->type = $fields['type'];
     $this->id = $this->insert();
   }
 
@@ -298,8 +313,8 @@ class Condiment extends Database
 
 class Beverage extends Database
 {
-  private $id, $name, $price, $type;
-  protected $columns = "name,price,type";
+  private $id, $name, $price;
+  protected $columns = "name,price";
   protected $table_name = "beverages";
   function __construct($fields){
     parent::__construct();
@@ -307,7 +322,6 @@ class Beverage extends Database
       $this->id = $fields['ID'];
       $this->name = $fields['name'];
       $this->price = $fields['price'];
-      $this->type = $fields['type'];
     }
   }
   function __destruct() {
@@ -320,13 +334,11 @@ class Beverage extends Database
     $this->id = $row['ID'];
     $this->name = $row['name'];
     $this->price = $row['price'];
-    $this->type = $row['type'];
   }
 
   function by_data($fields){
     $this->name = $fields['name'];
     $this->price = $fields['price'];
-    $this->type = $fields['type'];
     $this->id = $this->insert();
   }
 
@@ -375,10 +387,6 @@ class Beverage extends Database
 
   function get_name(){
     return $this->name;
-  }
-
-  function get_type(){
-    return $this->type;
   }
 
   function get_price(){
