@@ -466,6 +466,26 @@ class User extends Database
     $this->desc = $row['description'];
 
   }
+  function by_login($email , $password){
+    $sql = "SELECT * FROM $this->table_name WHERE email = '$email' AND password = '$password'";
+    $result = mysqli_query($this->conn,$sql);
+    $row = mysqli_fetch_array($result);
+    if($row){
+        $this->id = $row['ID'];
+        $this->email = $row['email'];
+        $this->password = $row['password'];
+        $this->username = $row['username'];
+        $this->mobile = $row['mobile'];
+        $this->type = $row['type'];
+        return true;
+    }
+    else {
+      return false;
+    }
+    
+    
+    
+  }
 
   function by_data($fields){
     $this->name = $fields['name'];
@@ -514,6 +534,10 @@ class User extends Database
 
 
   }
+
+  function get_name(){
+    return $this->username;
+  }
   function display_table_row(){
 
     $values = array("ID"=>$this->id,"username"=>$this->username,"email"=>$this->email,"password"=>$this->password,"mobile"=>$this->mobile , "type"=>$this->type );
@@ -537,9 +561,6 @@ class User extends Database
     </tr> ";
   }
 
-  function get_name(){
-    return $this->name;
-  }
 
 
 }

@@ -10,15 +10,17 @@
 
 		<nav class="side-bar">
 			<div class="user-p">
-				<h4>User Name</h4>
+			<?php
+				include_once "../classes.php"; //access the drinks page
+				session_start();
+
+				
+			
+			?>
+				<h4><?php echo $_SESSION['user']->get_name(); ?></h4>
 			</div>
 			<ul>
-				<li>
-					<a href="#">
-						<i class="fa fa-desktop" aria-hidden="true"></i>
-						<span>Dashboard</span>
-					</a>
-				</li>
+				
 				<li>
 					<a href="admin_drinks.php">
 						<i class="fa fa-shopping-basket" aria-hidden="true"></i>
@@ -26,16 +28,30 @@
 					</a>
 				</li>
         		<li>
-					<a href="#">
+					<a href="admin_users.php">
 						<i class="fa fa-users" aria-hidden="true"></i>
 						<span>Users</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="admin_beverages.php">
+						<i class="fa fa-users" aria-hidden="true"></i>
+						<span>beverages</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="admin_condiments.php">
+						<i class="fa fa-users" aria-hidden="true"></i>
+						<span>condiments</span>
 					</a>
 				</li>
 				
 				
 				
 				<li>
-					<a href="#">
+					<a href="admin_logout.php">
 						<i class="fa fa-power-off" aria-hidden="true"></i>
 						<span>Logout</span>
 					</a>

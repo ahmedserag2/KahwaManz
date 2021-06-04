@@ -11,7 +11,7 @@
 
         <?php include_once "./includes/admin_sidebar.php";?>
         
-        <?php include_once "../classes.php"; //access the drinks page?>
+        <?php// include_once "../classes.php"; //access the drinks page?>
 
         
 
