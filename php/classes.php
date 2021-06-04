@@ -430,6 +430,79 @@ class Beverage extends Database
 
 }
 
+// abstract function update($fields , $id); // id not needed? id in instance
+// abstract function delete($id);
+
+class Order extends Database
+{
+  private $id, $items,$quantity,$price;
+  protected $columns = "items,quantity,price";
+  protected $table_name = "orders";
+
+  function __construct($fields){
+    parent::__construct();
+    if ($fields) {
+      $this->id = $fields['ID'];
+      $this->quantity = $fields['quantity'];
+      $this->price = $fields['price'];
+    }
+  }
+
+  function by_id($id){
+    $sql = "SELECT * FROM $table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    $row = mysqli_fetch_array($result);
+    $this->id = $row['ID'];
+    $this->items = $row['items'];
+    $this->quantity = $fields['quantity'];
+    $this->price = $row['price'];
+  }
+
+  function by_data($fields){
+    $this->items = $row['items'];
+    $this->quantity = $fields['quantity'];
+    $this->price = $row['price'];
+    $this->id = $this->insert();
+  }
+
+  function insert($fields){
+    $values = implode("','",array_values($fields));
+    $sql = "INSERT INTO $this->table_name($this->columns) VALUES ('$values')";
+    $result = mysqli_query($this->conn,$sql);
+    return mysqli_insert_id($this->conn);
+  }
+
+  function update($fields, $id)
+  {
+    $columns = explode(",",$this->columns);
+    $noOfElements = count($fields);
+    $updatedElements = "";
+    //constructing the query
+    for($i = 0; $i < $noOfElements; $i++)
+    {
+      // set up the term columnname = value ,
+      $updatedElements .= "`{$columns[$i]}`" ." = ". "'{$fields[$i]}'";
+      //dont add the comma if its last element
+      if($i != $noOfElements - 1)
+      {
+        $updatedElements .= " , ";
+      }
+    }
+    //check the id to update
+    $sql = "UPDATE $this->table_name SET " . $updatedElements . " WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+  function delete($id)
+  {
+    $sql = "DELETE FROM $this->table_name WHERE ID = $id";
+    $result = mysqli_query($this->conn,$sql);
+    return $result;
+  }
+
+}
+
+
 class User extends Database
 {
 
