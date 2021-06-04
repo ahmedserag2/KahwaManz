@@ -1,4 +1,18 @@
-<?php include 'classes.php'; ?>
+<?php include 'classes.php';
+session_start();
+if (!$_SESSION['custom']) {
+  $_SESSION['custom']=array();
+}
+if(isset($_POST['submit'])){
+  $tuple=array();
+  $tuple['bev']=$_POST['bevs'];
+  $tuple['conds']=$_POST['conds'];
+  $tuple['size']=$_POST['size'];
+  $tuple['quantity']=$_POST['quantity'];
+  array_push($_SESSION['custom'],$tuple);
+  header('Location: menu.php');
+}
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -18,61 +32,63 @@
     <div class="menu-bg-c">
     <h1 class="customize-title">Make Your Own</h1>
 
-    <div class="step step-1">
-      <h2 class="step-title">Step 1: Choose Beverage</h2>
-      <?php
-        $beverage = new Beverage(NULL);
-        $results = $beverage->select_all();
-        foreach ($results as $result) { ?>
+    <form action="" method="post">
+      <div class="step step-1">
+        <h2 class="step-title">Step 1: Choose Beverage</h2>
+        <?php
+          $beverage = new Beverage(NULL);
+          $results = $beverage->select_all();
+          foreach ($results as $result) { ?>
 
-          <div class="step-option">
-            <input class="step-radio"  id="bevs" data-price=<?php echo $result->get_price(); ?> name="bevs" type="radio" id=<?php echo $result->get_id();?> value=<?php echo $result->get_id();?>>
-            <label class="step-radio" style="margin-right:200px;" for=<?php echo $result->get_id();?>><?php echo $result->get_name();?></label>
-            <label class="step-price" for=<?php echo $result->get_id();?>><?php echo $result->get_price(); ?></label><br>
-          </div
+            <div class="step-option">
+              <input class="step-radio" required id="bevs" data-price=<?php echo $result->get_price(); ?> name="bevs" type="radio" id=<?php echo $result->get_id();?> value=<?php echo $result->get_id();?>>
+              <label class="step-radio" style="margin-right:200px;" for=<?php echo $result->get_id();?>><?php echo $result->get_name();?></label>
+              <label class="step-price" for=<?php echo $result->get_id();?>><?php echo $result->get_price(); ?></label><br>
+            </div
 
-        <?php echo "<br>";
-        } ?>
-    </div>
+          <?php echo "<br>";
+          } ?>
+      </div>
 
-    <div class="step step-2">
-      <h2 class="step-title">Step 2: Add Condiments</h2>
-      <?php
-        $condiment = new Condiment(NULL);
-        $results = $condiment->select_all();
-        foreach ($results as $result) { ?>
+      <div class="step step-2">
+        <h2 class="step-title">Step 2: Add Condiments</h2>
+        <?php
+          $condiment = new Condiment(NULL);
+          $results = $condiment->select_all();
+          foreach ($results as $result) { ?>
 
-          <div class="step-option">
-            <input class="step-radio" id="conds" data-price=<?php echo $result->get_price(); ?> name="conds" type="radio" id=<?php echo $result->get_id();?> value=<?php echo $result->get_id();?>>
-            <label class="step-radio" style="margin-right:200px; width:40px;" for=<?php echo $result->get_id();?>><?php echo $result->get_name();?></label>
-            <label class="step-price" for=<?php echo $result->get_id();?>><?php echo $result->get_price(); ?></label><br>
-          </div
+            <div class="step-option">
+              <input class="step-radio" id="conds" data-price=<?php echo $result->get_price(); ?> name="conds[]" type="checkbox" id=<?php echo $result->get_id();?> value=<?php echo $result->get_id();?>>
+              <label class="step-radio" style="margin-right:200px; width:40px;" for=<?php echo $result->get_id();?>><?php echo $result->get_name();?></label>
+              <label class="step-price" for=<?php echo $result->get_id();?>><?php echo $result->get_price(); ?></label><br>
+            </div
 
-        <?php echo "<br>";
-        } ?>
+          <?php echo "<br>";
+          } ?>
 
-    </div>
+      </div>
 
-    <div class="step step-3" >
-      <h2 class="step-title">Select Size</h2>
-      <input id="radio"  type="radio" id="small" name="size" value="1">
-          <label id="label" for="small">S</label>
-          <input id="radio"  type="radio" id="medium" name="size" value="1.5">
-          <label id="label"  for="medium">M</label>
-          <input id="radio"  type="radio" id="large" name="size" value="1.8">
-          <label id="label"  for="large">L</label>
-    </div>
+      <div class="step step-3" >
+        <h2 class="step-title">Select Size</h2>
+        <input id="radio" class="step-radio" type="radio" checked required id="small" name="size" value="0">
+            <label id="label" for="small">S</label>
+            <input id="radio"  type="radio" name="size" id="medium" name="size" value="6">
+            <label id="label"  for="medium">M (+6)</label>
+            <input id="radio"  type="radio" id="large" name="size" value="14">
+            <label id="label"  for="large">L (+14)</label>
+      </div>
 
-    <div class="step step-4">
-      <h2 class="step-title">Quantity</h2>
-        <button class="btn" data-quantity="minus" data-field="quantity"><i class="fas fa-minus"></i></button>
-         <input id="quantity" type="number" name="quantity" value="1">
-         <button class="btn" data-quantity="plus" data-field="quantity"><i class="fas fa-plus"></i></button>
-    </div>
-    <div class="step step-5">
-      <h2 style="float: left; font-size: 60px;">Price 0</h2>
-      <button class="basket-c" id="result-c">Add to Basket 0 EGP</button>
-    </div>
+      <div class="step step-4">
+        <h2 class="step-title">Quantity</h2>
+          <button class="btn" data-quantity="minus" data-field="quantity"><i class="fas fa-minus"></i></button>
+           <input id="quantity" required type="number" name="quantity" value="1">
+           <button class="btn" data-quantity="plus" data-field="quantity"><i class="fas fa-plus"></i></button>
+      </div>
+      <div class="step step-5">
+        <input type="submit" name="submit" class="basket-c" id="result-c" value="Add to Basket 0 EGP">
+      </div>
+    </form>
+
   </div>
 
   </body>
@@ -84,28 +100,29 @@
     var currentVal = parseInt($('input[name=quantity').val());
     var bevval=0;
     var condval=0;
-    var sizeval=1;
+    var sizeval=0;
     var qval=1;
     var sum=0;
     $("input[id^='radio']").click(function() {
-      sizeval= $(this).val();
-      sum=(bevval+condval)*sizeval*qval;
+      sizeval= parseInt($(this).val());
+      sum=(bevval+condval+sizeval)*qval;
+      console.log(bevval+condval);
       $('input[name=quantity]').val(1);
-      $('button[id=result-c]').html("Add to Basket " + (sum) + ".00EGP");
+      $('input[id=result-c]').val("Add to Basket " + (sum) + ".00EGP");
     });
 
     $("input[id^='bevs']").click(function() {
       bevval= parseInt($(this).data('price'));
-      sum=(bevval+condval)*sizeval*qval;
+      sum=(bevval+condval+sizeval)*qval;
       $('input[name=quantity]').val(1);
-      $('button[id=result-c]').html("Add to Basket " + (sum) + ".00EGP");
+      $('input[id=result-c]').val("Add to Basket " + (sum) + ".00EGP");
     });
 
     $("input[id^='conds']").click(function() {
       condval= parseInt($(this).data('price'));
-      sum=(bevval+condval)*sizeval*qval;
+      sum=(bevval+condval+sizeval)*qval;
       $('input[name=quantity]').val(1);
-      $('button[id=result-c]').html("Add to Basket " + (sum) + ".00EGP");
+      $('input[id=result-c]').val("Add to Basket " + (sum) + ".00EGP");
     });
 
       $('[data-quantity="plus"]').click(function(e){
@@ -114,9 +131,9 @@
           qval = parseInt($('input[name='+fieldName+']').val());
           if (!isNaN(currentVal)) {
               ++qval;
-              sum=(bevval+condval)*sizeval*qval;
+              sum=(bevval+condval+sizeval)*qval;
               $('input[name='+fieldName+']').val(qval);
-              $('button[id=result-c]').html("Add to Basket " + sum + ".00EGP");
+              $('input[id=result-c]').val("Add to Basket " + sum + ".00EGP");
           } else {
               $('input[name='+fieldName+']').val(1);
           }
@@ -127,13 +144,14 @@
           qval = parseInt($('input[name='+fieldName+']').val());
           if (!isNaN(currentVal) && qval > 1) {
               --qval;
-              sum=(bevval+condval)*sizeval*qval;
+              sum=(bevval+condval+sizeval)*qval;
               $('input[name='+fieldName+']').val(qval);
-              $('button[id=result-c]').html("Add to Basket " + sum + ".00EGP");
+              $('input[id=result-c]').val("Add to Basket " + sum + ".00EGP");
           } else {
               $('input[name='+fieldName+']').val(1);
           }
       });
+
   });
 
 
