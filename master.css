@@ -218,3 +218,9 @@ input[type="radio" i]{
   font-size: 40px;
   height: 40px;
 }
+
+.back{
+  text-decoration: none;
+  margin-left: 50px;
+  color:black;
+}
