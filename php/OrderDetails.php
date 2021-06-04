@@ -30,7 +30,7 @@ $photopath="../Images/Drinks/$photo";
       $name = $drink->get_name();
       $size = number_format($_POST['size'],2, '.', '');
       $quantity = number_format($_POST['quantity'],2, '.', '');
-      $array = array($name, $size, $quantity);
+      $array = array($name, $size, $quantity,$photopath);
 
       array_push($_SESSION['drinks_basket'],$array);
       header('Location: menu.php');
