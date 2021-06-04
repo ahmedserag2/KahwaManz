@@ -36,15 +36,22 @@
 
 				<li>
 					<a href="admin_beverages.php">
-						<i class="fa fa-users" aria-hidden="true"></i>
+						<i class="fa fa-glass"></i>
 						<span>beverages</span>
 					</a>
 				</li>
 
 				<li>
 					<a href="admin_condiments.php">
-						<i class="fa fa-users" aria-hidden="true"></i>
+						<i class="fa fa-plus" aria-hidden="true"></i>
 						<span>condiments</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="admin_orders.php">
+						<i class="fa fa-first-order" aria-hidden="true"></i>
+						<span>Orders</span>
 					</a>
 				</li>
 				

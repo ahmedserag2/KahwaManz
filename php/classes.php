@@ -435,6 +435,7 @@ class Order extends Database
     parent::__construct();
     if ($fields) {
       $this->id = $fields['ID'];
+      $this->items = $fields['items'];
       $this->quantity = $fields['quantity'];
       $this->price = $fields['price'];
     }
@@ -494,6 +495,22 @@ class Order extends Database
   function get_id(){
     return $this->id;
   }
+
+  function display_table_row(){
+
+   
+    //$this->id = $fields['ID'];
+    
+    echo "<tr>
+    <th scope='row'>{$this->id}</th>
+    
+    <td>{$this->items}</td>
+    <td>{$this->quantity} </td>
+    <td>{$this->price} </td>
+
+    </tr> ";
+  }
+  
 
 }
 
