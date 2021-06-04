@@ -28,10 +28,19 @@ $photopath="../Images/Drinks/$photo";
     if (isset($_POST['submit']) && !empty($_POST['submit']))
     {
       $name = $drink->get_name();
-      $size = number_format($_POST['size'],2, '.', '');
+      $sizeprice = number_format($_POST['size'],2, '.', '');
       $quantity = number_format($_POST['quantity'],2, '.', '');
-      $array = array($name, $size, $quantity,$photopath);
-
+      $sizename = "small";
+      if($_POST['size'] == $drink->get_price() + 6){
+        $sizename = "Medium";
+      }
+      else if($_POST['size'] == $drink->get_price() + 14){
+          $sizename = "Large";
+      }
+      else {
+        $sizename = "Small";
+      }
+      $array = array($name,$sizename, $sizeprice, $quantity,$photopath);
       array_push($_SESSION['drinks_basket'],$array);
       header('Location: menu.php');
     }
@@ -45,11 +54,11 @@ $photopath="../Images/Drinks/$photo";
         <p><?php echo $drink->get_desc(); ?></p>
         <form class="" action="" method="post">
           <h2>Select Size</h2>
-          <input class="radio active" type="radio" id="small" name="size" value="36.00" checked>
+          <input class="radio active" type="radio" id="small" name="size" value="<?php echo $drink->get_price();?>" checked>
           <label class="label" for="small">S (<?php echo $drink->get_price();?>)</label>
-          <input class="radio" type="radio" id="medium" name="size" value="42.00">
+          <input class="radio" type="radio" id="medium" name="size" value="<?php echo number_format($drink->get_price() + 6, 2, '.', '');?>">
           <label class="label" for="medium">M (<?php echo number_format($drink->get_price() + 6, 2, '.', '');?>)</label>
-          <input class="radio" type="radio" id="large" name="size" value="50.00">
+          <input class="radio" type="radio" id="large" name="size" value="<?php echo number_format($drink->get_price() + 14, 2, '.', '');?>">
           <label class="label" for="large">L (<?php echo number_format($drink->get_price() + 14, 2, '.', '');?>)</label>
           <h2 style="margin-top: 40px;">Quantity</h2>
           <button class="btn" data-quantity="minus" data-field="quantity" ><i class="fas fa-minus"></i></button>
