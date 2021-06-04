@@ -19,6 +19,7 @@ abstract class Database
   abstract function insert($fields);
   abstract function update($fields , $id); // id not needed? id in instance
   abstract function delete($id);
+  abstract function display_table_row();
   function select_all($key = null){
     if(isset($key))
     {
@@ -84,7 +85,7 @@ abstract class Database
 
 class Drink extends Database
 {
-  private $id, $name, $condiments_ID, $beans,$price,$desc,$image;
+  private $id, $name,$price,$desc,$image;
   protected $table_name = "drink";
   //changed desc to description to match column name in db
   protected $columns = "name,price,description,image";
@@ -95,7 +96,6 @@ class Drink extends Database
       $this->name = $fields['name'];
       $this->price = $fields['price'];
       $this->desc = $fields['description'];
-      $this->condiments_ID = [];
       $this->image = $fields['image'];
     }
   }
@@ -298,10 +298,6 @@ class Condiment extends Database
     return $this->name;
   }
 
-  function get_desc(){
-    return $this->desc;
-  }
-
   function get_price(){
     return $this->price;
   }
@@ -391,10 +387,6 @@ class Beverage extends Database
     $sql = "DELETE FROM $this->table_name WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     return $result;
-  }
-
-  function display(){
-    echo "<br> $this->id <br> $this->name <br> $this->price <br> $this->type <br>";
   }
 
   function get_id(){
@@ -498,6 +490,9 @@ class Order extends Database
     $sql = "DELETE FROM $this->table_name WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     return $result;
+  }
+  function get_id(){
+    return $this->id;
   }
 
 }
@@ -629,14 +624,7 @@ class User extends Database
     <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
     <a href='admin_users.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
     </td>
-
-
     </tr> ";
   }
-
-
-
 }
-
-
 ?>
