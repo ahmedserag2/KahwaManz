@@ -219,3 +219,9 @@ input[type="radio" i],input[type="checkbox" i]{
   height: 40px;
   filter: grayscale(1);
 }
+
+.back{
+  text-decoration: none;
+  margin-left: 50px;
+  color:black;
+}

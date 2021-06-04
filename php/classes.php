@@ -217,9 +217,6 @@ class Drink extends Database
     return $this->price;
   }
 
-  function get_image(){
-    return $this->image;
-  }
 
 }
 
