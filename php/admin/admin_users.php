@@ -171,7 +171,18 @@
                         </div>
                    </div>
 
-                   
+                   <div class = "form-group row">
+
+                        <label for = "type"  class = "col-sm-3">type</label>
+                        <div class = "col-sm-6">
+                            <select name = "typeAdd" id="typeAdd">
+                                <option value="" disabled selected>Choose option</option>
+                                <option value="admin">Admin</option>
+                                <option value="employee">Employee</option>
+                             
+                            </select>
+                        </div>
+                   </div>
 
                     
                     <div class="modal-footer">
@@ -246,6 +257,19 @@
                         </div>
                    </div>
 
+                   <div class = "form-group row">
+
+                        <label for = "type"  class = "col-sm-3">type</label>
+                        <div class = "col-sm-6">
+                            <select name = "typeEdit" id="typeEdit">
+                                <option value="" disabled selected>Choose option</option>
+                                <option value="admin">Admin</option>
+                                <option value="employee">Employee</option>
+                             
+                            </select>
+                        </div>
+                   </div>
+
                     
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-warning submit" >Submit Edit</button>
@@ -272,7 +296,7 @@
         document.getElementById("emailEdit").value = data.email;
         document.getElementById("mobileEdit").value = data.mobile;
         document.getElementById("passwordEdit").value = data.password;
-        
+        document.getElementById("typeEdit").value = data.type;
 
 
     }
@@ -294,11 +318,11 @@
         $email = $_GET['emailAdd'];
         $mobile = $_GET['mobileAdd'];
         $password = $_GET['passwordAdd'];
-
+        $type = $_GET['typeAdd'];
 
         $user = new User(null);
         //need to change to option select
-        $user->insert(array($username,$email,$password, $mobile,"customer"));
+        $user->insert(array($username,$email,$password, $mobile,$type));
 
         echo '<script>window.location.replace("admin_users.php");</script>';
     }
@@ -310,12 +334,12 @@
         $email = $_GET['emailEdit'];
         $mobile = $_GET['mobileEdit'];
         $password = $_GET['passwordEdit'];
-
+        $type = $_GET['typeEdit'];
 
         $user = new User(null);
 
         //put the feilds in the same order as in the db 
-        $user->update(array($username,$email,$password, $mobile,"customer"), $id);
+        $user->update(array($username,$email,$password, $mobile,$type), $id);
         echo '<script>window.location.replace("admin_users.php");</script>';
 
     }

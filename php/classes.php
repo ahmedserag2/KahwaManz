@@ -411,14 +411,14 @@ class Beverage extends Database
 
   function display_table_row(){
 
-    $values = array("ID"=>$this->id,"name"=>$this->name,"price"=>$this->price,"type"=>$this->type);
+    $values = array("ID"=>$this->id,"name"=>$this->name,"price"=>$this->price);
     $json_object = json_encode($values);
 
     echo "<tr>
     <th scope='row'>{$this->id}</th>
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
-    <td>{$this->type} </td>
+    
     <td>
     <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
     <a href='admin_beverages.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
