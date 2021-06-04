@@ -32,13 +32,10 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">email</th>
-                        <th scope="col">mobile</th>
-
-                        <th scope="col">Role</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">price</th>
                         <th scope="col">Action</th>
-
+                        
 
                     </tr>
                 </thead>

@@ -225,3 +225,10 @@ input[type="radio" i],input[type="checkbox" i]{
   margin-left: 50px;
   color:black;
 }
+.cart{
+  text-decoration: none;
+  color: black;
+  font-size: 65px;
+  float: right;
+  padding-right: 75px;
+}

@@ -147,19 +147,7 @@
                         </div>
                    </div>
 
-                   <div class = "form-group row">
-
-                        <label for = "type"  class = "col-sm-3">type</label>
-                        <div class = "col-sm-6">
-                            <select name = "typeAdd" id="typeAdd">
-                                <option value="" disabled selected>Choose option</option>
-                                <option value="sauce">suace</option>
-                                <option value="sweetner">sweetner</option>
-                                <option value="creamer">creamer</option>
-                                <option value="milk">milk</option>
-                            </select>
-                        </div>
-                   </div>
+                   
 
                    
 
@@ -273,10 +261,9 @@
         
         $name = $_GET['nameAdd'];
         $price = $_GET['priceAdd'];
-        $type = $_GET['typeAdd'];
 
         $drink = new Beverage(null);
-        $drink->insert(array($name,$price,$type));
+        $drink->insert(array($name,$price));
 
         echo '<script>window.location.replace("admin_beverages.php");</script>';
     }
@@ -289,7 +276,7 @@
         $type = $_GET['typeEdit'];
         $drink = new Beverage(null);
         //put the feilds in the same order as in the db 
-        $drink->update(array($name,$price,$type), $id);
+        $drink->update(array($name,$price), $id);
         echo '<script>window.location.replace("admin_beverages.php");</script>';
 
     }
