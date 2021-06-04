@@ -306,6 +306,7 @@ $arr=$_SESSION['drinks_basket'];
       if(isset($_POST['check']))
       {
        $order->by_data($arr1);
+       $_SESSION['order'] = $order->get_id();
       }
 
      ?>
@@ -317,7 +318,7 @@ $arr=$_SESSION['drinks_basket'];
           <td class="subtotal">Subtotal</td>
           <td class="subammount"><?php echo $subtotal." ";?>EGP</td>
 
-        </tr>
+          </tr>
         <tr>
           <td class="tax">Tax:</td>
           <td class="taxamount"><?php echo $tax." ";?>EGP</td>
@@ -333,8 +334,11 @@ $arr=$_SESSION['drinks_basket'];
     </form>
 
   </div>
-<script>
-function checkout() {
-  alert("Your order is successfully placed. ")
-}
-</script>
+  <?php
+    echo "<script>
+    function checkout() {
+      alert('Your order is successfully placed. Your order number is $_SESSION[order]')
+    }
+    </script>";
+    unset($_SESSION['order']);
+  ?>
