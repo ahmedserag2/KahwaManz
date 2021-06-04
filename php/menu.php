@@ -78,7 +78,9 @@
 
     <div class="menu-bg-c">
       <input type="text" name="" placeholder="  Search..."><br><br><br><br><br>
+      <a class="cart" href="basket.php" ><i class="fas fa-shopping-cart"></i></a> <br><br>
         <a class="custom" href="customize.php" >Customise your drink</a> <br><br>
+
       <table>
       <?php
         include_once 'classes.php';
