@@ -306,7 +306,14 @@ $arr=$_SESSION['drinks_basket'];
       if(isset($_POST['check']))
       {
        $order->by_data($arr1);
+<<<<<<< HEAD
+       $tempid = $order->get_id();
+       echo "<script>
+       alert('Your order is successfully placed. Your order number is $tempid');
+     </script>";
+=======
        $_SESSION['order'] = $order->get_id();
+>>>>>>> c9f0ddd8d5548ac71671961f5310705b47415f84
       }
 
      ?>
@@ -329,11 +336,18 @@ $arr=$_SESSION['drinks_basket'];
         </tr>
       </table>
     </div>
-    <form class="" action="" method="post">
-      <input type="submit" onclick="checkout()" class="checkbut"  name="check" value="Checkout">
-    </form>
+    <?php
+    if(!empty($_SESSION['drinks_basket'])||!empty($_SESSION['custom']))
+      {
+        echo "<form class='' action='' method='post'>
+      <input type='submit' class='checkbut'  name='check' value='Checkout'>
+      </form>";
+    }
+    ?>
 
   </div>
+<<<<<<< HEAD
+=======
   <?php
     echo "<script>
     function checkout() {
@@ -342,3 +356,4 @@ $arr=$_SESSION['drinks_basket'];
     </script>";
     unset($_SESSION['order']);
   ?>
+>>>>>>> c9f0ddd8d5548ac71671961f5310705b47415f84
