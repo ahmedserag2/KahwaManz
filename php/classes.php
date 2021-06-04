@@ -344,7 +344,7 @@ class Beverage extends Database
     parent::__destruct();
   }
   function by_id($id){
-    $sql = "SELECT * FROM condiment WHERE ID = $id";
+    $sql = "SELECT * FROM $table_name WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     $row = mysqli_fetch_array($result);
     $this->id = $row['ID'];
@@ -459,10 +459,10 @@ class Order extends Database
   }
 
   function by_data($fields){
-    $this->items = $row['items'];
+    $this->items = $fields['items'];
     $this->quantity = $fields['quantity'];
-    $this->price = $row['price'];
-    $this->id = $this->insert();
+    $this->price = $fields['price'];
+    $this->id = $this->insert($fields);
   }
 
   function insert($fields){

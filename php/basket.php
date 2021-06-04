@@ -1,11 +1,16 @@
 
 
+<?php
+include 'classes.php';
+session_start();
+?>
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rosario" />
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
+
 
 body
 {
@@ -133,100 +138,100 @@ table
 <h1>Basket<h1>
 <h5>Order Details <h6>
 
-<div class="cointainer">
-<div class="card">
+<div class='cointainer';
+  <?php
+  $arr=$_SESSION['drinks_basket'];
+  $arr2=$_SESSION['custom'];
+  print_r($arr2);
+  $size=count($arr);
+  
+  echo $size;
 
-<img class="itemimg " src="../images/cappucino.jpg" width="12%" height="15%">
+  $name;
+  $price;
+  $quan;
+  $photopath;
+  $subtotal=0;
+  $tax;
+  $items="";
+  $quantities="";
+  for($i=0;$i<sizeof($arr);$i++)
+  {
 
-<div class="name">
-Meduim <br> capaccuino
-</div>
+    $name=$arr[$i][0];
+    $size=$arr[$i][1];
+    $price=$arr[$i][2];
+    $quan=$arr[$i][3];
+    $photopath=$arr[$i][4];
+    $items.= $name.", ".$size."-";
+    $quantities.=$quan."-";
+    $subtotal+=$price*$quan;
 
-<div class="price">
-42 EGP
-</div>
-<div class="quantity">
-Quantity : 1
-</div>
-<button class="remove">
-X
-</div>
 
-<div class="cointainer">
-<div class="card">
+  ?>
 
-<img class="itemimg " src="../images/cappucino.jpg" width="12%" height="15%">
+    <div class="card">
 
-<div class="name">
-Meduim <br> capaccuino
-</div>
+    <img class="itemimg " src="<?php echo $photopath ?>" width="12%" height="15%">
 
-<div class="price">
-42 EGP
-</div>
-<div class="quantity">
-Quantity : 1
-</div>
-<button class="remove">
-X
-</div>
+    <div class="name">
+    <?php echo $name." ".$size;?>
+    </div>
 
-<div class="cointainer">
-<div class="card">
+    <div class="price">
+    <?php echo $price;?>
+    </div>
+    <div class="quantity">
+    <?php echo "quantity :".$quan;?>
+    </div>
+    <button class="remove">
+    X
+    </div>
 
-<img class="itemimg " src="../images/cappucino.jpg" width="12%" height="15%">
+    </div>
 
-<div class="name">
-Meduim <br> capaccuino
-</div>
+    <?php
+        }
+    ?>
+    <?php
+      $tax=$subtotal*0.14;
+      $items=rtrim($items, "-");
+      $quantities=rtrim($quantities, "-");
+      $order=new Order(null);
+      $arr1=[];
+      $arr1['items']=$items;
+      $arr1['quantity']=$quantities;
+      $arr1['price']=$subtotal+$tax;
+      if(isset($_POST['check']))
+      {
+       $order->by_data($arr1);
+      }
 
-<div class="price">
-42 EGP
-</div>
-<div class="quantity">
-Quantity : 1
-</div>
-<button class="remove">
-X
-</div>
-<div class="card">
+     ?>
 
-<img class="itemimg " src="../images/cappucino.jpg" width="12%" height="15%">
+    <div class="sum">
+    <div class="subtotal">
+      <table>
+        <tr>
+          <td class="subtotal">Subtotal</td>
+          <td class="subammount"><?php echo $subtotal." ";?>EGP</td>
 
-<div class="name">
-Meduim <br> capaccuino
-</div>
+        </tr>
+        <tr>
+          <td class="tax">Tax:</td>
+          <td class="taxamount"><?php echo $tax." ";?>EGP</td>
+        </tr>
+        <tr>
+          <td class="total">Total:</td>
+          <td class="totalamount"><?php echo $subtotal+$tax." ";?>EGP</td>
+        </tr>
+      </table>
+    </div>
+    <form class="" action="" method="post">
+      <input type="submit" onclick="checkout()" class="checkbut"  name="check" value="Checkout">
+    </form>
 
-<div class="price">
-42 EGP
-</div>
-<div class="quantity">
-Quantity : 1
-</div>
-<button class="remove">
-X
-</div>
-<div class="sum">
-  <div class="subtotal">
-    <table>
-      <tr>
-        <td class="subtotal">Subtotal</td>
-        <td class="subammount">98 EGP</td>
-      </tr>
-      <tr>
-        <td class="tax">Tax:</td>
-        <td class"taxamount">100 EGP</td>
-      </tr>
-      <tr>
-        <td class="total">Total:</td>
-        <td class="totalamount">110 EGP</td>
-      </tr>
-    </table>
   </div>
-  <button onclick="checkout()" class="checkbut"> Checkout
-</div>
-</div>
-
 <script>
 function checkout() {
   alert("Your order is successfully placed. ")

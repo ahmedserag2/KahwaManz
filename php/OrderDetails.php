@@ -2,7 +2,7 @@
 <?php
 include 'classes.php';
 session_start();
-if (!$_SESSION['drinks_basket']) {
+if (!isset($_SESSION['drinks_basket'])) {
   $_SESSION['drinks_basket']=array();
 }
 $drink = new Drink(null);

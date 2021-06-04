@@ -1,6 +1,6 @@
 <?php include 'classes.php';
 session_start();
-if (!$_SESSION['custom']) {
+if (!isset($_SESSION['custom'])) {
   $_SESSION['custom']=array();
 }
 if(isset($_POST['submit'])){
