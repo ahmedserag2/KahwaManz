@@ -65,11 +65,27 @@
           $clamp(desc[i], {clamp: 2});
         }
       }
+      function display_items(){
+        var formData = new FormData();
+        var bar = document.getElementById("search")
+        if (bar.value!="") {
+          formData.append('bar', bar.value);
+        }
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function() {
+          if (this.readyState==4 && this.status==200) {
+            document.getElementById("rTable").innerHTML=this.responseText;
+            overflow()
+          }
+        }
+        xmlhttp.open("POST","search.php",true);
+        xmlhttp.send(formData);
+      }
 
 
     </script>
   </head>
-  <body onload="overflow()">
+  <body onload="display_items()">
     <div class="container">
       <div class="bg">
         <img src="../images/images.jpg" alt="">
@@ -77,19 +93,12 @@
     </div>
 
     <div class="menu-bg-c">
-      <input type="text" name="" placeholder="  Search..."><br><br><br><br><br>
+      <input type="text" id="search" placeholder="  Search..." oninput="display_items()"><br><br><br><br><br>
       <a class="cart" href="basket.php" ><i class="fas fa-shopping-cart"></i></a> <br><br>
         <a class="custom" href="customize.php" >Customise your drink</a> <br><br>
 
-      <table>
-      <?php
-        include_once 'classes.php';
-        $drinks = new Drink(0);
-        $drinks = $drinks->select_all();
-        foreach ($drinks as $drink) {
-          $drink->display_menu_item();
-        }
-      ?>
+      <table id="rTable">
+
       </table>
     </div>
 
