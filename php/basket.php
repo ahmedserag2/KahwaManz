@@ -30,7 +30,6 @@ if(!isset($_SESSION['drinks_basket']))
 if(!isset($_SESSION['custom']))
 {
   $_SESSION['custom']=array();
-
 }
 ?>
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -306,14 +305,10 @@ $arr=$_SESSION['drinks_basket'];
       if(isset($_POST['check']))
       {
        $order->by_data($arr1);
-<<<<<<< HEAD
        $tempid = $order->get_id();
        echo "<script>
        alert('Your order is successfully placed. Your order number is $tempid');
      </script>";
-=======
-       $_SESSION['order'] = $order->get_id();
->>>>>>> c9f0ddd8d5548ac71671961f5310705b47415f84
       }
 
      ?>
@@ -346,14 +341,3 @@ $arr=$_SESSION['drinks_basket'];
     ?>
 
   </div>
-<<<<<<< HEAD
-=======
-  <?php
-    echo "<script>
-    function checkout() {
-      alert('Your order is successfully placed. Your order number is $_SESSION[order]')
-    }
-    </script>";
-    unset($_SESSION['order']);
-  ?>
->>>>>>> c9f0ddd8d5548ac71671961f5310705b47415f84
