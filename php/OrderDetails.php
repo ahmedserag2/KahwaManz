@@ -2,9 +2,13 @@
 <?php
 include 'classes.php';
 session_start();
+if (!$_SESSION['drinks_basket']) {
+  $_SESSION['drinks_basket']=array();
+}
 $drink = new Drink(null);
-
 $drink->by_id($_GET['id']);
+$photo= $drink->get_image();
+$photopath="../Images/Drinks/$photo";
  ?>
 <html lang="en" dir="ltr">
   <head>
@@ -17,7 +21,7 @@ $drink->by_id($_GET['id']);
   <body>
     <div class="container">
       <div class="bg">
-        <img src="../Images/images.jpg" alt="">
+        <img src="<?php echo $photopath ?>" alt="">
       </div>
     </div>
     <?php
@@ -29,16 +33,17 @@ $drink->by_id($_GET['id']);
       $array = array($name, $size, $quantity);
 
       array_push($_SESSION['drinks_basket'],$array);
+      header('Location: menu.php');
     }
 
      ?>
     <div class="container">
       <div class="menu-bg">
-        <a href="Homepage.php"><img src="../Images/left-arrow.png" alt="" width="60" height="60"></a>
+        <a href="menu.php" class="back"><i class="fas fa-arrow-left fa-4x"></i></a>
         <h1><?php echo $drink->get_name(); ?></h1>
         <h2>Description</h2>
         <p><?php echo $drink->get_desc(); ?></p>
-        <form class="" action="menu.php" method="post">
+        <form class="" action="" method="post">
           <h2>Select Size</h2>
           <input class="radio active" type="radio" id="small" name="size" value="36.00" checked>
           <label class="label" for="small">S (<?php echo $drink->get_price();?>)</label>
