@@ -34,6 +34,7 @@ if(!isset($_SESSION['custom']))
 }
 ?>
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rosario" />
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,14 +157,18 @@ table
   border: none;
   border-spacing: 110px 4px;
 }
-
+.back{
+  text-decoration: none;
+  color: black;
+  font-size: 10px;
+}
 
 
 
 </style>
 
 
-
+<a href="menu.php" class="back"><i class="fas fa-arrow-left fa-4x"></i></a>
 <h1>Basket<h1>
 <h5>Order Details <h6>
 
@@ -219,7 +224,6 @@ table
    ?>
 
     <div class="card">
-
     <img class="itemimg " src="../Images/cust.png" width="12%" height="15%">
 
     <div class="name">
@@ -302,6 +306,7 @@ $arr=$_SESSION['drinks_basket'];
       if(isset($_POST['check']))
       {
        $order->by_data($arr1);
+       $_SESSION['order'] = $order->get_id();
       }
 
      ?>
@@ -313,7 +318,7 @@ $arr=$_SESSION['drinks_basket'];
           <td class="subtotal">Subtotal</td>
           <td class="subammount"><?php echo $subtotal." ";?>EGP</td>
 
-        </tr>
+          </tr>
         <tr>
           <td class="tax">Tax:</td>
           <td class="taxamount"><?php echo $tax." ";?>EGP</td>
@@ -329,8 +334,11 @@ $arr=$_SESSION['drinks_basket'];
     </form>
 
   </div>
-<script>
-function checkout() {
-  alert("Your order is successfully placed. ")
-}
-</script>
+  <?php
+    echo "<script>
+    function checkout() {
+      alert('Your order is successfully placed. Your order number is $_SESSION[order]')
+    }
+    </script>";
+    unset($_SESSION['order']);
+  ?>
