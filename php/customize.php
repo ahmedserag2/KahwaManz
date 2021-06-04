@@ -2,6 +2,7 @@
 session_start();
 if (!isset($_SESSION['custom'])) {
   $_SESSION['custom']=array();
+  
 }
 if(isset($_POST['submit'])){
   $tuple=array();

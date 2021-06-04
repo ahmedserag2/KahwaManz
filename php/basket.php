@@ -3,6 +3,35 @@
 <?php
 include 'classes.php';
 session_start();
+//session_unset();
+if(isset($_POST["submit"]))
+{
+
+  $temp=explode(",",$_POST["submit"]);
+  if($temp[0]=="cust")
+  {
+
+
+
+   unset($_SESSION['custom'][$temp[1]]);
+
+  }
+  elseif ($temp[0]=="Drink") {
+
+    unset($_SESSION['drinks_basket'][$temp[1]]);
+  }
+}
+
+if(!isset($_SESSION['drinks_basket']))
+{
+  $_SESSION['drinks_basket']=array();
+
+}
+if(!isset($_SESSION['custom']))
+{
+  $_SESSION['custom']=array();
+
+}
 ?>
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rosario" />
@@ -140,12 +169,7 @@ table
 
 <div class='cointainer';
   <?php
-  $arr=$_SESSION['drinks_basket'];
-  $arr2=$_SESSION['custom'];
-  print_r($arr2);
-  $size=count($arr);
-  
-  echo $size;
+
 
   $name;
   $price;
@@ -155,7 +179,79 @@ table
   $tax;
   $items="";
   $quantities="";
-  for($i=0;$i<sizeof($arr);$i++)
+
+
+  $arr2=$_SESSION['custom'];
+
+  foreach ($arr2 as $key => $item) {
+    $size=$item['size'];
+    if ($size==0) {
+      $size="Small";
+    }
+    elseif ($size==6) {
+      $size="Meduim";
+    }
+    else {
+      $size="Large";
+    }
+    $quan=$item['quantity'];
+    $beverage=new Beverage(null);
+    $beverage->by_id($item['bev']);
+    $name=$beverage->get_name();
+    $price=$beverage->get_price();
+    $condprice=0;
+    $conds="";
+    foreach ($item['conds'] as $value) {
+      $cond=new Condiment(null);
+      $cond->by_id($value);
+      $condname=$cond->get_name();
+      $condprice+=$cond->get_price();
+      $conds.=$condname.",";
+
+
+
+    }
+
+    $conds= rtrim($conds, ",");
+    $items.= $name.", ".$size.",".$conds."-";
+    $quantities.=$quan."-";
+    //$subtotal+=$price*$quan;
+   ?>
+
+    <div class="card">
+
+    <img class="itemimg " src="../Images/cust.png" width="12%" height="15%">
+
+    <div class="name">
+    <?php echo $name." ".$size." "."($conds)";?>
+    </div>
+
+    <div class="price">
+    <?php echo ($price+$condprice);?>
+    </div>
+    <div class="quantity">
+    <?php echo "quantity :".$quan;?>
+    </div>
+    <form class="" action="" method="post">
+      <button type="submit" class="remove" value="<?php echo "cust,".$key; ?>" name="submit">
+        X
+    </form>
+
+
+    </div>
+    <?php
+    $subtotal+=($price+$condprice)*$quan;
+  }
+
+
+
+
+  //session_unset();
+
+
+$arr=$_SESSION['drinks_basket'];
+  $i=0;
+  for($i;$i<sizeof($arr);$i++)
   {
 
     $name=$arr[$i][0];
@@ -184,9 +280,10 @@ table
     <div class="quantity">
     <?php echo "quantity :".$quan;?>
     </div>
-    <button class="remove">
-    X
-    </div>
+    <form class="" action="" method="post">
+      <button type="submit" class="remove" value="<?php echo "Drink,".$i; ?>" name="submit">
+        X
+    </form>
 
     </div>
 

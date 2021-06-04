@@ -344,7 +344,7 @@ class Beverage extends Database
     parent::__destruct();
   }
   function by_id($id){
-    $sql = "SELECT * FROM $table_name WHERE ID = $id";
+    $sql = "SELECT * FROM $this->table_name WHERE ID = $id";
     $result = mysqli_query($this->conn,$sql);
     $row = mysqli_fetch_array($result);
     $this->id = $row['ID'];
@@ -418,7 +418,7 @@ class Beverage extends Database
     <th scope='row'>{$this->id}</th>
     <td>{$this->name}</td>
     <td>{$this->price} EGP</td>
-    
+
     <td>
     <button  type='button' onclick='setEditModal({$json_object})' class='btn btn-warning add' data-toggle='modal' data-target='#editItemModal' >Edit</button>
     <a href='admin_beverages.php?delete={$this->id}'><button  type='button'  class='btn btn-danger'>Delete</button></a>
@@ -555,9 +555,9 @@ class User extends Database
     else {
       return false;
     }
-    
-    
-    
+
+
+
   }
 
   function by_data($fields){
