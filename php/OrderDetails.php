@@ -118,7 +118,7 @@ $photopath="../Images/Drinks/$photo";
           }
       });
   });
-
+<?php echo hi ?>
 
   </script>
 </html>
